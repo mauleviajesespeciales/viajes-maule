@@ -74,3 +74,130 @@ button:hover {
   background: #fff3cd;
   border: 2px solid #fbbc04;
 }
+
+.cliente-body {
+  background: linear-gradient(135deg, #0b1f3a, #123c69, #f5f7fb);
+  min-height: 100vh;
+  padding: 0;
+}
+
+.hero {
+  background: linear-gradient(135deg, #002b5b, #00509d, #ffb703);
+  color: white;
+  padding: 55px 20px;
+  text-align: center;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+}
+
+.hero-content h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 19px;
+  margin-bottom: 12px;
+}
+
+.hero-content span {
+  background: rgba(255,255,255,0.2);
+  padding: 9px 16px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.titulo-seccion {
+  color: white;
+  margin-top: 30px;
+}
+
+.viaje-card {
+  border-left: 8px solid #ffb703;
+}
+
+.ruta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: 12px;
+}
+
+.ruta span {
+  color: #777;
+  font-size: 13px;
+}
+
+.ruta h2 {
+  margin: 5px 0;
+  color: #002b5b;
+}
+
+.flecha {
+  font-size: 35px;
+  font-weight: bold;
+  color: #ff8500;
+}
+
+.datos-viaje {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 18px 0;
+}
+
+.datos-viaje p {
+  background: #eef5ff;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0;
+  font-weight: bold;
+}
+
+.btn-secundario {
+  background: #ff8500;
+}
+
+.btn-secundario:hover {
+  background: #d96f00;
+}
+
+.zona-asientos {
+  margin-top: 20px;
+  background: #f8fbff;
+  padding: 15px;
+  border-radius: 14px;
+}
+
+.leyenda {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.conductor-box {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  margin: 15px auto;
+  max-width: 180px;
+  font-weight: bold;
+}
+
+@media (max-width: 700px) {
+  .ruta {
+    flex-direction: column;
+  }
+
+  .datos-viaje {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hero-content h1 {
+    font-size: 32px;
+  }
+}
