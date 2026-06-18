@@ -217,6 +217,41 @@
       text-align: center;
       margin-top: 10px;
     }
+
+    .telefono-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 7px 0 6px;
+  background: white;
+}
+
+.prefijo {
+  background: #eef6ff;
+  padding: 13px 14px;
+  font-weight: bold;
+  color: #082f5f;
+  border-right: 1px solid #cbd5e1;
+}
+
+.telefono-wrapper input {
+  border: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.telefono-wrapper input:focus {
+  outline: none;
+}
+
+.telefono-ayuda {
+  font-size: 12px;
+  color: #64748b;
+  margin: 4px 0 12px;
+}
+    
   </style>
 </head>
 
@@ -294,12 +329,31 @@ function cargarViajeConCupos(viajeId, v) {
           </select>
 
           <label>Nombre de quien reserva</label>
+          
           <input id="nombre-${viajeId}" placeholder="Ej: María González" oninput="actualizarResumen('${viajeId}', ${precio})">
 
           <label>Teléfono WhatsApp</label>
-          <input id="telefono-${viajeId}" placeholder="Ej: 56912345678" oninput="actualizarResumen('${viajeId}', ${precio})">
+         <label>WhatsApp</label>
+<div class="telefono-wrapper">
+  <span class="prefijo">+56</span>
+  <input 
+    id="telefono-${viajeId}" 
+    placeholder="912345678"
+    maxlength="9"
+    inputmode="numeric"
+    oninput="
+      this.value = this.value.replace(/[^0-9]/g, '').slice(0,9);
+      actualizarResumen('${viajeId}', ${precio});
+    "
+  >
+</div>
 
+<p class="telefono-ayuda">
+  Escribe tu número sin +56. Lo usaremos para contactarte sobre tu viaje.
+</p>
           <label>Punto de abordaje / subida</label>
+
+          
           <input id="abordaje-${viajeId}" placeholder="Ej: Terminal Talca, plaza, domicilio..." oninput="actualizarResumen('${viajeId}', ${precio})">
 
           <div class="resumen" id="resumen-${viajeId}">
