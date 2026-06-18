@@ -17,47 +17,43 @@
     }
 
     .hero {
-      min-height: 360px;
-      padding: 55px 20px 110px;
+      padding: 55px 20px 105px;
       text-align: center;
       color: white;
-      background:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
-        linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
       border-bottom-left-radius: 45px;
       border-bottom-right-radius: 45px;
     }
 
     .hero h1 {
-      font-size: 48px;
+      font-size: 44px;
       margin: 0 0 12px;
     }
 
     .hero p {
-      font-size: 20px;
+      font-size: 19px;
       margin: 8px 0;
     }
 
     .hero span {
       display: inline-block;
-      margin-top: 18px;
-      padding: 11px 20px;
+      margin-top: 16px;
+      padding: 10px 20px;
       border-radius: 999px;
       background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.35);
       font-weight: bold;
     }
 
     .contenedor {
-      max-width: 1050px;
-      margin: -80px auto 45px;
+      max-width: 1000px;
+      margin: -75px auto 45px;
       padding: 0 18px;
     }
 
     .titulo-seccion {
       color: white;
       text-align: center;
-      font-size: 32px;
+      font-size: 30px;
       margin-bottom: 25px;
     }
 
@@ -67,9 +63,6 @@
       padding: 28px;
       margin: 22px 0;
       box-shadow: 0 18px 45px rgba(0,0,0,0.22);
-    }
-
-    .viaje-card {
       border-top: 8px solid #ff9f1c;
     }
 
@@ -78,9 +71,9 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 18px;
-      background: linear-gradient(135deg, #f8fbff, #e8f2ff);
+      background: #eef6ff;
       border-radius: 20px;
-      padding: 25px;
+      padding: 24px;
       text-align: center;
     }
 
@@ -93,43 +86,71 @@
 
     .ruta h2 {
       color: #082f5f;
-      font-size: 33px;
+      font-size: 31px;
       margin: 8px 0 0;
     }
 
     .flecha {
       background: #ff9f1c;
       color: white;
-      width: 56px;
-      height: 56px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: bold;
     }
 
     .datos-viaje {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
+      gap: 12px;
       margin: 22px 0;
     }
 
-    .datos-viaje p {
-      background: #eef6ff;
-      color: #0f3057;
+    .dato {
+      background: #f1f7ff;
       border-radius: 16px;
-      padding: 16px 10px;
-      margin: 0;
+      padding: 15px 10px;
       text-align: center;
       font-weight: bold;
+      color: #0f3057;
+    }
+
+    .cupos-box {
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      border: 2px solid #22c55e;
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+      margin: 18px 0;
+      color: #14532d;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .formulario {
+      margin-top: 20px;
+      background: #f8fbff;
+      border-radius: 20px;
+      padding: 22px;
+      border: 1px solid #dbeafe;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
     }
 
     button {
       width: 100%;
       padding: 15px;
-      margin: 8px 0;
+      margin: 10px 0 0;
       border: none;
       border-radius: 14px;
       color: white;
@@ -139,83 +160,19 @@
       background: linear-gradient(135deg, #0077ff, #004fbd);
     }
 
-    .btn-secundario {
-      background: linear-gradient(135deg, #ff9f1c, #ff6b00);
+    button:hover {
+      filter: brightness(1.05);
     }
 
-    .zona-asientos {
-      margin-top: 25px;
-      padding: 24px;
-      background: #f8fbff;
-      border: 1px solid #dbeafe;
-      border-radius: 22px;
-    }
-
-    .zona-asientos h3,
-    .leyenda {
-      text-align: center;
-    }
-
-    .leyenda {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .conductor-box {
-      width: 180px;
-      margin: 18px auto;
-      padding: 13px;
-      background: #111827;
-      color: white;
-      text-align: center;
-      border-radius: 14px;
-      font-weight: bold;
-    }
-
-    .asientos {
-      max-width: 420px;
-      margin: 0 auto 18px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .asiento {
-      padding: 18px;
-      border-radius: 14px;
-      text-align: center;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .disponible {
-      background: #dcfce7;
-      border: 2px solid #22c55e;
-    }
-
-    .ocupado {
+    .sin-cupos {
       background: #fee2e2;
       border: 2px solid #ef4444;
-      cursor: not-allowed;
-    }
-
-    .seleccionado {
-      background: #fef3c7;
-      border: 2px solid #f59e0b;
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      margin: 8px 0;
-      border-radius: 12px;
-      border: 1px solid #cbd5e1;
-      font-size: 15px;
+      color: #7f1d1d;
     }
 
     @media (max-width: 700px) {
       .hero h1 {
-        font-size: 34px;
+        font-size: 33px;
       }
 
       .ruta {
@@ -237,8 +194,8 @@
 
 <div class="hero">
   <h1>Viajes Especiales Maule</h1>
-  <p>Reserva tu pasaje o asegura una minivan completa para tu próximo viaje.</p>
-  <span>Traslados cómodos, seguros y organizados</span>
+  <p>Reserva tu cupo para viajar cómodo y seguro.</p>
+  <span>Traslados especiales en auto para 4 pasajeros</span>
 </div>
 
 <div class="contenedor">
@@ -251,7 +208,7 @@
 <script src="firebase-config.js"></script>
 
 <script>
-let asientoSeleccionado = null;
+const CAPACIDAD = 4;
 
 db.collection("viajes")
   .where("estado", "==", "activo")
@@ -261,7 +218,7 @@ db.collection("viajes")
 
     if (snapshot.empty) {
       cont.innerHTML = `
-        <div class="card viaje-card">
+        <div class="card">
           <h3>No hay viajes disponibles por ahora</h3>
           <p>Vuelve a revisar más tarde.</p>
         </div>
@@ -270,10 +227,56 @@ db.collection("viajes")
     }
 
     snapshot.forEach(doc => {
+      const viajeId = doc.id;
       const v = doc.data();
+      cargarViajeConCupos(viajeId, v);
+    });
+  });
 
-      cont.innerHTML += `
-        <div class="card viaje-card">
+function cargarViajeConCupos(viajeId, v) {
+  db.collection("reservas")
+    .where("viajeId", "==", viajeId)
+    .get()
+    .then(snapshot => {
+      let cuposVendidos = 0;
+
+      snapshot.forEach(doc => {
+        const r = doc.data();
+        cuposVendidos += Number(r.cupos || 0);
+      });
+
+      const disponibles = CAPACIDAD - cuposVendidos;
+      const precio = Number(v.precioAsiento || 0);
+
+      let opciones = "";
+      for (let i = 1; i <= disponibles; i++) {
+        opciones += `<option value="${i}">${i} pasajero${i > 1 ? "s" : ""}</option>`;
+      }
+
+      const bloqueFormulario = disponibles > 0 ? `
+        <div class="formulario">
+          <h3>Reservar cupos</h3>
+
+          <label>Cantidad de pasajeros</label>
+          <select id="cupos-${viajeId}">
+            ${opciones}
+          </select>
+
+          <input id="nombre-${viajeId}" placeholder="Nombre de quien reserva">
+          <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
+
+          <button onclick="confirmarReserva('${viajeId}', ${precio})">
+            Confirmar reserva
+          </button>
+        </div>
+      ` : `
+        <div class="cupos-box sin-cupos">
+          Viaje completo
+        </div>
+      `;
+
+      document.getElementById("viajes").innerHTML += `
+        <div class="card">
           <div class="ruta">
             <div>
               <span>Origen</span>
@@ -287,144 +290,67 @@ db.collection("viajes")
           </div>
 
           <div class="datos-viaje">
-            <p>📅 ${v.fecha}</p>
-            <p>🕒 ${v.hora}</p>
-            <p>💺 12 asientos</p>
-            <p>💰 $${v.precioAsiento}</p>
+            <div class="dato">📅 ${v.fecha}</div>
+            <div class="dato">🕒 ${v.hora}</div>
+            <div class="dato">🚗 4 pasajeros</div>
+            <div class="dato">💰 $${precio}</div>
           </div>
 
-          <button onclick="mostrarAsientos('${doc.id}', ${v.precioAsiento})">
-            Comprar pasaje
-          </button>
+          <div class="cupos-box ${disponibles <= 0 ? "sin-cupos" : ""}">
+            Cupos disponibles: ${disponibles} de ${CAPACIDAD}
+          </div>
 
-          <button class="btn-secundario" onclick="reservarCompleto('${doc.id}')">
-            Reservar minivan completa
-          </button>
-
-          <div id="asientos-${doc.id}"></div>
+          ${bloqueFormulario}
         </div>
       `;
     });
-  });
-
-function mostrarAsientos(viajeId, precio) {
-  asientoSeleccionado = null;
-
-  db.collection("reservas")
-    .where("viajeId", "==", viajeId)
-    .get()
-    .then(snapshot => {
-      const ocupados = [];
-
-      snapshot.forEach(doc => {
-        const r = doc.data();
-        if (r.asiento) ocupados.push(r.asiento);
-      });
-
-      let html = `
-        <div class="zona-asientos">
-          <h3>Selecciona tu asiento</h3>
-          <p class="leyenda">Verde disponible · Rojo ocupado · Amarillo seleccionado</p>
-
-          <div class="conductor-box">Conductor</div>
-
-          <div class="asientos">
-      `;
-
-      for (let i = 1; i <= 12; i++) {
-        const ocupado = ocupados.includes(i);
-        html += `
-          <div 
-            class="asiento ${ocupado ? "ocupado" : "disponible"}"
-            onclick="${ocupado ? "" : `seleccionarAsiento('${viajeId}', ${i})`}"
-            id="asiento-${viajeId}-${i}">
-            ${i}
-          </div>
-        `;
-      }
-
-      html += `
-          </div>
-
-          <input id="nombre-${viajeId}" placeholder="Nombre pasajero">
-          <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
-
-          <button onclick="confirmarReserva('${viajeId}', ${precio})">
-            Confirmar reserva
-          </button>
-        </div>
-      `;
-
-      document.getElementById(`asientos-${viajeId}`).innerHTML = html;
-    });
 }
 
-function seleccionarAsiento(viajeId, asiento) {
-  asientoSeleccionado = asiento;
-
-  for (let i = 1; i <= 12; i++) {
-    const el = document.getElementById(`asiento-${viajeId}-${i}`);
-    if (el && el.classList.contains("disponible")) {
-      el.classList.remove("seleccionado");
-    }
-  }
-
-  document.getElementById(`asiento-${viajeId}-${asiento}`).classList.add("seleccionado");
-}
-
-function confirmarReserva(viajeId, precio) {
+function confirmarReserva(viajeId, precioUnitario) {
+  const cupos = Number(document.getElementById(`cupos-${viajeId}`).value);
   const nombre = document.getElementById(`nombre-${viajeId}`).value;
   const telefono = document.getElementById(`telefono-${viajeId}`).value;
-
-  if (!asientoSeleccionado) {
-    alert("Selecciona un asiento");
-    return;
-  }
 
   if (!nombre || !telefono) {
     alert("Completa nombre y teléfono");
     return;
   }
 
-  db.collection("reservas").add({
-    viajeId,
-    nombre,
-    telefono,
-    asiento: asientoSeleccionado,
-    tipo: "pasaje",
-    precio,
-    pagado: false,
-    estadoAbordaje: "pendiente",
-    creado: new Date()
-  }).then(() => {
-    alert("Reserva realizada correctamente");
-    location.reload();
-  });
-}
+  db.collection("reservas")
+    .where("viajeId", "==", viajeId)
+    .get()
+    .then(snapshot => {
+      let cuposVendidos = 0;
 
-function reservarCompleto(viajeId) {
-  const nombre = prompt("Nombre de quien reserva la minivan completa:");
-  const telefono = prompt("Teléfono WhatsApp:");
+      snapshot.forEach(doc => {
+        const r = doc.data();
+        cuposVendidos += Number(r.cupos || 0);
+      });
 
-  if (!nombre || !telefono) return;
+      const disponibles = CAPACIDAD - cuposVendidos;
 
-  db.collection("reservas").add({
-    viajeId,
-    nombre,
-    telefono,
-    tipo: "minivan_completa",
-    precio: 0,
-    pagado: false,
-    estadoAbordaje: "pendiente",
-    creado: new Date()
-  }).then(() => {
-    db.collection("viajes").doc(viajeId).update({
-      estado: "reservado_completo"
+      if (cupos > disponibles) {
+        alert("Ya no quedan suficientes cupos disponibles");
+        location.reload();
+        return;
+      }
+
+      db.collection("reservas").add({
+        viajeId,
+        nombre,
+        telefono,
+        cupos,
+        tipo: cupos === CAPACIDAD ? "auto_completo" : "pasaje",
+        precioUnitario,
+        precioTotal: precioUnitario * cupos,
+        pagado: false,
+        estadoAbordaje: "pendiente",
+        creado: new Date()
+      }).then(() => {
+        alert("Reserva realizada correctamente");
+        location.reload();
+      });
     });
-
-    alert("Minivan completa reservada");
-    location.reload();
-  });
 }
 </script>
 
