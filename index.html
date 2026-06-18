@@ -436,7 +436,8 @@ function confirmarReserva(viajeId, precioUnitario, origen, destino, fecha, hora)
 
   const cupos = Number(document.getElementById(`cupos-${viajeId}`).value);
   const nombre = document.getElementById(`nombre-${viajeId}`).value.trim();
-  const telefono = document.getElementById(`telefono-${viajeId}`).value.trim();
+  const telefonoIngresado = document.getElementById(`telefono-${viajeId}`).value.trim();
+const telefono = "+56" + telefonoIngresado;
   const abordaje = document.getElementById(`abordaje-${viajeId}`).value.trim();
 
   if (!nombre || !telefono || !abordaje) {
