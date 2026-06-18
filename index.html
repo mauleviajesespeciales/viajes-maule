@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Viajes Especiales Maule</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -17,140 +16,187 @@
     }
 
     .hero {
-      padding: 55px 20px 105px;
+      padding: 38px 18px 85px;
       text-align: center;
       color: white;
       background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
-      border-bottom-left-radius: 45px;
-      border-bottom-right-radius: 45px;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
     }
 
     .hero h1 {
-      font-size: 44px;
-      margin: 0 0 12px;
+      font-size: 31px;
+      margin: 0 0 10px;
     }
 
     .hero p {
-      font-size: 19px;
+      font-size: 16px;
       margin: 8px 0;
     }
 
     .hero span {
       display: inline-block;
-      margin-top: 16px;
-      padding: 10px 20px;
+      margin-top: 13px;
+      padding: 9px 15px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.22);
       font-weight: bold;
+      font-size: 13px;
     }
 
     .contenedor {
-      max-width: 1000px;
-      margin: -75px auto 45px;
-      padding: 0 18px;
+      max-width: 430px;
+      margin: -62px auto 35px;
+      padding: 0 14px;
     }
 
     .titulo-seccion {
       color: white;
       text-align: center;
-      font-size: 30px;
-      margin-bottom: 25px;
+      font-size: 24px;
+      margin-bottom: 18px;
     }
 
     .card {
       background: white;
-      border-radius: 26px;
-      padding: 28px;
-      margin: 22px 0;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.22);
-      border-top: 8px solid #ff9f1c;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 18px 0;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      border-top: 7px solid #ff9f1c;
     }
 
     .ruta {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 18px;
+      grid-template-columns: 1fr;
+      gap: 12px;
       background: #eef6ff;
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 18px;
+      padding: 18px;
       text-align: center;
     }
 
     .ruta span {
       color: #64748b;
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
       font-weight: bold;
     }
 
     .ruta h2 {
       color: #082f5f;
-      font-size: 31px;
-      margin: 8px 0 0;
+      font-size: 25px;
+      margin: 5px 0 0;
     }
 
     .flecha {
       background: #ff9f1c;
       color: white;
-      width: 54px;
-      height: 54px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
+      margin: auto;
     }
 
     .datos-viaje {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 22px 0;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 18px 0;
     }
 
     .dato {
       background: #f1f7ff;
-      border-radius: 16px;
-      padding: 15px 10px;
+      border-radius: 14px;
+      padding: 13px 8px;
       text-align: center;
       font-weight: bold;
       color: #0f3057;
+      font-size: 14px;
     }
 
     .cupos-box {
       background: linear-gradient(135deg, #dcfce7, #bbf7d0);
       border: 2px solid #22c55e;
-      border-radius: 18px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 15px;
       text-align: center;
-      margin: 18px 0;
+      margin: 15px 0;
       color: #14532d;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 16px;
+    }
+
+    .sin-cupos {
+      background: #fee2e2;
+      border: 2px solid #ef4444;
+      color: #7f1d1d;
     }
 
     .formulario {
-      margin-top: 20px;
+      margin-top: 18px;
       background: #f8fbff;
-      border-radius: 20px;
-      padding: 22px;
+      border-radius: 18px;
+      padding: 18px;
       border: 1px solid #dbeafe;
+    }
+
+    .formulario h3 {
+      margin-top: 0;
+      text-align: center;
+      color: #082f5f;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: bold;
+      color: #334155;
     }
 
     input, select {
       width: 100%;
-      padding: 14px;
-      margin: 8px 0;
+      padding: 13px;
+      margin: 7px 0 12px;
       border-radius: 12px;
       border: 1px solid #cbd5e1;
       font-size: 15px;
     }
 
+    .resumen {
+      background: white;
+      border: 2px dashed #ff9f1c;
+      border-radius: 16px;
+      padding: 15px;
+      margin-top: 14px;
+    }
+
+    .resumen h4 {
+      margin: 0 0 10px;
+      color: #082f5f;
+      text-align: center;
+    }
+
+    .resumen p {
+      margin: 6px 0;
+      font-size: 14px;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      color: #0f766e;
+      text-align: center;
+      margin-top: 10px;
+    }
+
     button {
       width: 100%;
       padding: 15px;
-      margin: 10px 0 0;
+      margin: 12px 0 0;
       border: none;
       border-radius: 14px;
       color: white;
@@ -160,32 +206,16 @@
       background: linear-gradient(135deg, #0077ff, #004fbd);
     }
 
-    button:hover {
-      filter: brightness(1.05);
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
     }
 
-    .sin-cupos {
-      background: #fee2e2;
-      border: 2px solid #ef4444;
-      color: #7f1d1d;
-    }
-
-    @media (max-width: 700px) {
-      .hero h1 {
-        font-size: 33px;
-      }
-
-      .ruta {
-        grid-template-columns: 1fr;
-      }
-
-      .datos-viaje {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .contenedor {
-        margin-top: -65px;
-      }
+    .nota {
+      font-size: 12px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -209,6 +239,7 @@
 
 <script>
 const CAPACIDAD = 4;
+const WHATSAPP_EMPRESA = "56979557665";
 
 db.collection("viajes")
   .where("estado", "==", "activo")
@@ -253,21 +284,34 @@ function cargarViajeConCupos(viajeId, v) {
         opciones += `<option value="${i}">${i} pasajero${i > 1 ? "s" : ""}</option>`;
       }
 
-      const bloqueFormulario = disponibles > 0 ? `
+      const formulario = disponibles > 0 ? `
         <div class="formulario">
-          <h3>Reservar cupos</h3>
+          <h3>Datos de reserva</h3>
 
           <label>Cantidad de pasajeros</label>
-          <select id="cupos-${viajeId}">
+          <select id="cupos-${viajeId}" onchange="actualizarResumen('${viajeId}', ${precio})">
             ${opciones}
           </select>
 
-          <input id="nombre-${viajeId}" placeholder="Nombre de quien reserva">
-          <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
+          <label>Nombre de quien reserva</label>
+          <input id="nombre-${viajeId}" placeholder="Ej: María González" oninput="actualizarResumen('${viajeId}', ${precio})">
 
-          <button onclick="confirmarReserva('${viajeId}', ${precio})">
-            Confirmar reserva
+          <label>Teléfono WhatsApp</label>
+          <input id="telefono-${viajeId}" placeholder="Ej: 56912345678" oninput="actualizarResumen('${viajeId}', ${precio})">
+
+          <label>Punto de abordaje / subida</label>
+          <input id="abordaje-${viajeId}" placeholder="Ej: Terminal Talca, plaza, domicilio..." oninput="actualizarResumen('${viajeId}', ${precio})">
+
+          <div class="resumen" id="resumen-${viajeId}">
+            <h4>Resumen de compra</h4>
+            <p>Selecciona tus datos para ver el resumen.</p>
+          </div>
+
+          <button id="btn-${viajeId}" onclick="confirmarReserva('${viajeId}', ${precio}, '${v.origen}', '${v.destino}', '${v.fecha}', '${v.hora}')">
+            Confirmar y enviar WhatsApp
           </button>
+
+          <p class="nota">Al confirmar, tu reserva quedará registrada y se abrirá WhatsApp.</p>
         </div>
       ` : `
         <div class="cupos-box sin-cupos">
@@ -282,7 +326,7 @@ function cargarViajeConCupos(viajeId, v) {
               <span>Origen</span>
               <h2>${v.origen}</h2>
             </div>
-            <div class="flecha">→</div>
+            <div class="flecha">↓</div>
             <div>
               <span>Destino</span>
               <h2>${v.destino}</h2>
@@ -300,21 +344,54 @@ function cargarViajeConCupos(viajeId, v) {
             Cupos disponibles: ${disponibles} de ${CAPACIDAD}
           </div>
 
-          ${bloqueFormulario}
+          ${formulario}
         </div>
       `;
+
+      if (disponibles > 0) {
+        setTimeout(() => actualizarResumen(viajeId, precio), 100);
+      }
     });
 }
 
-function confirmarReserva(viajeId, precioUnitario) {
-  const cupos = Number(document.getElementById(`cupos-${viajeId}`).value);
-  const nombre = document.getElementById(`nombre-${viajeId}`).value;
-  const telefono = document.getElementById(`telefono-${viajeId}`).value;
+function actualizarResumen(viajeId, precioUnitario) {
+  const cupos = Number(document.getElementById(`cupos-${viajeId}`)?.value || 1);
+  const nombre = document.getElementById(`nombre-${viajeId}`)?.value || "";
+  const telefono = document.getElementById(`telefono-${viajeId}`)?.value || "";
+  const abordaje = document.getElementById(`abordaje-${viajeId}`)?.value || "";
+  const total = cupos * precioUnitario;
 
-  if (!nombre || !telefono) {
-    alert("Completa nombre y teléfono");
+  const resumen = document.getElementById(`resumen-${viajeId}`);
+  if (!resumen) return;
+
+  resumen.innerHTML = `
+    <h4>Resumen de compra</h4>
+    <p><strong>Pasajeros:</strong> ${cupos}</p>
+    <p><strong>Nombre:</strong> ${nombre || "Pendiente"}</p>
+    <p><strong>Teléfono:</strong> ${telefono || "Pendiente"}</p>
+    <p><strong>Punto de subida:</strong> ${abordaje || "Pendiente"}</p>
+    <p><strong>Valor por pasajero:</strong> $${precioUnitario}</p>
+    <div class="total">Total: $${total}</div>
+  `;
+}
+
+function confirmarReserva(viajeId, precioUnitario, origen, destino, fecha, hora) {
+  const btn = document.getElementById(`btn-${viajeId}`);
+
+  if (btn.disabled) return;
+
+  const cupos = Number(document.getElementById(`cupos-${viajeId}`).value);
+  const nombre = document.getElementById(`nombre-${viajeId}`).value.trim();
+  const telefono = document.getElementById(`telefono-${viajeId}`).value.trim();
+  const abordaje = document.getElementById(`abordaje-${viajeId}`).value.trim();
+
+  if (!nombre || !telefono || !abordaje) {
+    alert("Completa nombre, teléfono y punto de subida");
     return;
   }
+
+  btn.disabled = true;
+  btn.innerText = "Procesando reserva...";
 
   db.collection("reservas")
     .where("viajeId", "==", viajeId)
@@ -335,20 +412,46 @@ function confirmarReserva(viajeId, precioUnitario) {
         return;
       }
 
+      const precioTotal = precioUnitario * cupos;
+
       db.collection("reservas").add({
         viajeId,
         nombre,
         telefono,
+        abordaje,
         cupos,
         tipo: cupos === CAPACIDAD ? "auto_completo" : "pasaje",
         precioUnitario,
-        precioTotal: precioUnitario * cupos,
+        precioTotal,
         pagado: false,
         estadoAbordaje: "pendiente",
         creado: new Date()
       }).then(() => {
-        alert("Reserva realizada correctamente");
-        location.reload();
+        const mensaje =
+`Hola, quiero confirmar esta reserva:
+
+🚗 *Viaje:* ${origen} → ${destino}
+📅 *Fecha:* ${fecha}
+🕒 *Hora:* ${hora}
+👤 *Nombre:* ${nombre}
+📱 *Teléfono:* ${telefono}
+📍 *Punto de subida:* ${abordaje}
+👥 *Pasajeros:* ${cupos}
+💰 *Total:* $${precioTotal}
+
+Quedo atento/a a la confirmación.`;
+
+const url = `https://wa.me/${WHATSAPP_EMPRESA}?text=${encodeURIComponent(mensaje)}`;
+
+alert("Reserva registrada correctamente. Ahora se abrirá WhatsApp para confirmar.");
+
+window.location.href = url;
+        
+      }).catch(error => {
+        console.error(error);
+        alert("Ocurrió un error al guardar la reserva");
+        btn.disabled = false;
+        btn.innerText = "Confirmar y enviar WhatsApp";
       });
     });
 }
