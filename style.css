@@ -1,203 +1,240 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f3f6fb;
-  margin: 0;
-  padding: 20px;
-  color: #222;
+* {
+  box-sizing: border-box;
 }
 
-h1, h2 {
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef3f8;
+  color: #111827;
+}
+
+.cliente-body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 184, 77, 0.35), transparent 35%),
+    linear-gradient(135deg, #061a33, #0b3d75 45%, #f4f7fb 45%);
+}
+
+.hero {
+  color: white;
+  padding: 60px 20px 80px;
   text-align: center;
 }
 
-.contenedor {
+.hero-content {
   max-width: 900px;
   margin: auto;
 }
 
-.card {
-  background: white;
-  padding: 18px;
-  margin: 15px 0;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.hero h1 {
+  font-size: 48px;
+  margin: 0 0 12px;
+  letter-spacing: -1px;
 }
 
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin: 7px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+.hero p {
+  font-size: 20px;
+  margin: 8px 0;
+}
+
+.hero span {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 20px;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  font-weight: bold;
+}
+
+.contenedor {
+  max-width: 1050px;
+  margin: -45px auto 40px;
+  padding: 0 18px;
+}
+
+.titulo-seccion {
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  margin: 22px 0;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.16);
+}
+
+.viaje-card {
+  border: 1px solid rgba(255,255,255,0.6);
+  overflow: hidden;
+}
+
+.ruta {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8fbff, #eef5ff);
+  padding: 24px;
+  border-radius: 18px;
+  margin-bottom: 22px;
+}
+
+.ruta span {
+  color: #64748b;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.ruta h2 {
+  color: #082f5f;
+  font-size: 32px;
+  margin: 8px 0 0;
+}
+
+.flecha {
+  background: #ff9f1c;
+  color: white;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  box-shadow: 0 8px 18px rgba(255,159,28,0.35);
+}
+
+.datos-viaje {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.datos-viaje p {
+  margin: 0;
+  padding: 16px 10px;
+  border-radius: 16px;
+  background: #f1f7ff;
+  text-align: center;
+  font-weight: bold;
+  color: #0f3057;
 }
 
 button {
-  background: #0b7cff;
+  width: 100%;
+  padding: 15px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0077ff, #004fbd);
   color: white;
+  font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  border: none;
 }
 
 button:hover {
-  background: #075fc2;
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn-secundario {
+  background: linear-gradient(135deg, #ff9f1c, #ff6b00);
+}
+
+.zona-asientos {
+  margin-top: 25px;
+  padding: 22px;
+  background: #f8fbff;
+  border-radius: 20px;
+  border: 1px solid #dbeafe;
+}
+
+.zona-asientos h3 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.leyenda {
+  text-align: center;
+  color: #64748b;
+}
+
+.conductor-box {
+  width: 180px;
+  margin: 18px auto;
+  background: #111827;
+  color: white;
+  padding: 13px;
+  text-align: center;
+  border-radius: 14px;
+  font-weight: bold;
 }
 
 .asientos {
+  max-width: 420px;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-  margin-top: 15px;
+  gap: 12px;
 }
 
 .asiento {
-  padding: 15px;
-  border-radius: 10px;
+  padding: 18px;
+  border-radius: 14px;
   text-align: center;
   font-weight: bold;
   cursor: pointer;
 }
 
 .disponible {
-  background: #d8f8dd;
-  border: 2px solid #34a853;
+  background: #dcfce7;
+  border: 2px solid #22c55e;
 }
 
 .ocupado {
-  background: #ffd6d6;
-  border: 2px solid #d93025;
+  background: #fee2e2;
+  border: 2px solid #ef4444;
   cursor: not-allowed;
 }
 
 .seleccionado {
-  background: #fff3cd;
-  border: 2px solid #fbbc04;
+  background: #fef3c7;
+  border: 2px solid #f59e0b;
 }
 
-.cliente-body {
-  background: linear-gradient(135deg, #0b1f3a, #123c69, #f5f7fb);
-  min-height: 100vh;
-  padding: 0;
-}
-
-.hero {
-  background: linear-gradient(135deg, #002b5b, #00509d, #ffb703);
-  color: white;
-  padding: 55px 20px;
-  text-align: center;
-  border-bottom-left-radius: 35px;
-  border-bottom-right-radius: 35px;
-}
-
-.hero-content h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
-}
-
-.hero-content p {
-  font-size: 19px;
-  margin-bottom: 12px;
-}
-
-.hero-content span {
-  background: rgba(255,255,255,0.2);
-  padding: 9px 16px;
-  border-radius: 999px;
-  display: inline-block;
-}
-
-.titulo-seccion {
-  color: white;
-  margin-top: 30px;
-}
-
-.viaje-card {
-  border-left: 8px solid #ffb703;
-}
-
-.ruta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  gap: 12px;
-}
-
-.ruta span {
-  color: #777;
-  font-size: 13px;
-}
-
-.ruta h2 {
-  margin: 5px 0;
-  color: #002b5b;
-}
-
-.flecha {
-  font-size: 35px;
-  font-weight: bold;
-  color: #ff8500;
-}
-
-.datos-viaje {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin: 18px 0;
-}
-
-.datos-viaje p {
-  background: #eef5ff;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 0;
-  font-weight: bold;
-}
-
-.btn-secundario {
-  background: #ff8500;
-}
-
-.btn-secundario:hover {
-  background: #d96f00;
-}
-
-.zona-asientos {
-  margin-top: 20px;
-  background: #f8fbff;
-  padding: 15px;
-  border-radius: 14px;
-}
-
-.leyenda {
-  text-align: center;
-  color: #666;
-  font-size: 14px;
-}
-
-.conductor-box {
-  background: #222;
-  color: white;
-  text-align: center;
-  padding: 12px;
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
   border-radius: 12px;
-  margin: 15px auto;
-  max-width: 180px;
-  font-weight: bold;
+  border: 1px solid #cbd5e1;
+  font-size: 15px;
 }
 
 @media (max-width: 700px) {
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .contenedor {
+    margin-top: -35px;
+  }
+
   .ruta {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .datos-viaje {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .hero-content h1 {
-    font-size: 32px;
   }
 }
