@@ -2,19 +2,271 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seguimiento del Viaje</title>
-  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #061a33;
+      color: #111827;
+    }
+
+    .hero {
+      padding: 34px 18px 70px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .contenedor {
+      max-width: 430px;
+      margin: -48px auto 35px;
+      padding: 0 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 18px;
+      margin: 18px 0;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      border-top: 7px solid #ff9f1c;
+    }
+
+    h2 {
+      text-align: center;
+      color: #082f5f;
+      margin-top: 0;
+    }
+
+    .estado {
+      padding: 13px;
+      border-radius: 15px;
+      text-align: center;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .esperando {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+    }
+
+    .activo {
+      background: #dcfce7;
+      color: #14532d;
+      border: 1px solid #22c55e;
+    }
+
+    .finalizado {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border: 1px solid #ef4444;
+    }
+
+    #mapa {
+      width: 100%;
+      height: 420px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-top: 14px;
+      border: 2px solid #dbeafe;
+    }
+
+    .info {
+      background: #f1f7ff;
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .info p {
+      margin: 6px 0;
+    }
+
+    select {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0 12px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 13px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0077ff, #004fbd);
+    }
+
+    .nota {
+      font-size: 12px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="contenedor">
+<div class="hero">
   <h1>Seguimiento del Viaje</h1>
+  <p>Consulta la ubicación actual del vehículo.</p>
+</div>
+
+<div class="contenedor">
 
   <div class="card">
-    <p>En esta página después conectaremos el GPS del conductor.</p>
-    <p>El pasajero podrá ver la ubicación en tiempo real del minivan.</p>
+    <h2>Selecciona tu viaje</h2>
+    <select id="selectorViaje">
+      <option value="">Cargando viajes...</option>
+    </select>
+    <button onclick="verSeguimiento()">Ver seguimiento</button>
+    <p class="nota">El mapa se actualizará automáticamente si el conductor inició el viaje.</p>
   </div>
+
+  <div class="card">
+    <h2>Estado</h2>
+    <div id="estadoViaje" class="estado esperando">Selecciona un viaje para comenzar.</div>
+
+    <div id="mapa"></div>
+
+    <div class="info">
+      <p><strong>Última actualización:</strong> <span id="ultimaActualizacion">Sin datos</span></p>
+      <p><strong>Coordenadas:</strong> <span id="coordenadas">Sin datos</span></p>
+    </div>
+  </div>
+
 </div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+let mapa;
+let marcadorAuto;
+let unsubscribeGps = null;
+
+iniciarMapa();
+cargarViajes();
+
+function iniciarMapa() {
+  mapa = L.map("mapa").setView([-35.4264, -71.6554], 13);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "© OpenStreetMap"
+  }).addTo(mapa);
+}
+
+function cargarViajes() {
+  db.collection("viajes")
+    .orderBy("creado", "desc")
+    .onSnapshot(snapshot => {
+      const selector = document.getElementById("selectorViaje");
+      selector.innerHTML = `<option value="">Selecciona un viaje</option>`;
+
+      snapshot.forEach(doc => {
+        const v = doc.data();
+        selector.innerHTML += `
+          <option value="${doc.id}">
+            ${v.origen} → ${v.destino} | ${v.fecha} ${v.hora}
+          </option>
+        `;
+      });
+    });
+}
+
+function verSeguimiento() {
+  const viajeId = document.getElementById("selectorViaje").value;
+
+  if (!viajeId) {
+    alert("Selecciona un viaje");
+    return;
+  }
+
+  if (unsubscribeGps) {
+    unsubscribeGps();
+  }
+
+  unsubscribeGps = db.collection("gps").doc(viajeId).onSnapshot(doc => {
+    const estado = document.getElementById("estadoViaje");
+
+    if (!doc.exists) {
+      estado.className = "estado esperando";
+      estado.innerText = "El viaje aún no ha iniciado.";
+      document.getElementById("ultimaActualizacion").innerText = "Sin datos";
+      document.getElementById("coordenadas").innerText = "Sin datos";
+      return;
+    }
+
+    const data = doc.data();
+
+    if (!data.enViaje) {
+      estado.className = "estado finalizado";
+      estado.innerText = "El viaje no está activo o ya fue finalizado.";
+    } else {
+      estado.className = "estado activo";
+      estado.innerText = "Vehículo en camino.";
+    }
+
+    if (data.lat && data.lng) {
+      const lat = data.lat;
+      const lng = data.lng;
+
+      if (!marcadorAuto) {
+        marcadorAuto = L.marker([lat, lng]).addTo(mapa).bindPopup("Vehículo");
+      } else {
+        marcadorAuto.setLatLng([lat, lng]);
+      }
+
+      mapa.setView([lat, lng], 15);
+
+      document.getElementById("coordenadas").innerText =
+        lat.toFixed(6) + ", " + lng.toFixed(6);
+    }
+
+    if (data.actualizado && data.actualizado.toDate) {
+      document.getElementById("ultimaActualizacion").innerText =
+        data.actualizado.toDate().toLocaleString("es-CL");
+    } else {
+      document.getElementById("ultimaActualizacion").innerText = "Actualizando...";
+    }
+  });
+}
+</script>
 
 </body>
 </html>
