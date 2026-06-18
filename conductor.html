@@ -3,87 +3,274 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Viajes</title>
+  <title>Panel Conductor</title>
 
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; background: #061a33; color: #111827; }
-    .hero { padding: 36px 18px 78px; text-align: center; color: white; background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c); border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; }
-    .hero h1 { margin: 0 0 8px; font-size: 30px; }
-    .hero p { margin: 0; font-size: 15px; opacity: 0.95; }
-    .contenedor { max-width: 430px; margin: -55px auto 35px; padding: 0 14px; }
-    .card { background: white; border-radius: 22px; padding: 20px; margin: 18px 0; box-shadow: 0 14px 35px rgba(0,0,0,0.25); border-top: 7px solid #ff9f1c; }
-    h2, h3 { text-align: center; color: #082f5f; margin-top: 0; }
-    input { width: 100%; padding: 13px; margin: 8px 0 12px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 15px; }
-    button { width: 100%; padding: 13px; margin-top: 10px; border: none; border-radius: 13px; color: white; font-size: 15px; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, #0077ff, #004fbd); }
-    button:disabled { background: #94a3b8; cursor: not-allowed; }
-    .dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; }
-    .dashboard-3 { display: grid; grid-template-columns: 1fr; gap: 11px; }
-    .dash-card { background: #eef6ff; border-radius: 16px; padding: 15px 10px; text-align: center; color: #0f3057; font-weight: bold; }
-    .dash-card span { display: block; font-size: 22px; color: #082f5f; margin-top: 6px; }
-    .dash-card.finanza { background: #ecfdf5; color: #14532d; }
-    .dash-card.finanza span { color: #0f766e; }
-    .subtitulo-card { text-align: center; color: #64748b; font-size: 13px; margin: -6px 0 14px; }
-    .viaje-resumen { background: white; border-radius: 20px; padding: 18px; margin: 16px 0; box-shadow: 0 12px 28px rgba(0,0,0,0.22); border-left: 7px solid #ff9f1c; cursor: pointer; }
-    .viaje-resumen h3 { text-align: left; margin: 0 0 8px; color: #082f5f; font-size: 20px; }
-    .viaje-resumen p { margin: 5px 0; color: #475569; font-weight: bold; font-size: 14px; }
-    .indicador { float: right; font-size: 25px; color: #ff9f1c; font-weight: bold; }
-    .viaje-detalle { display: none; }
-    .viaje-detalle.abierto { display: block; }
-    .mini-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; margin: 12px 0; }
-    .dato { background: #f1f7ff; border-radius: 12px; padding: 10px; text-align: center; font-size: 13px; color: #0f3057; font-weight: bold; }
-    .reserva { background: #f8fbff; border: 1px solid #dbeafe; border-radius: 15px; padding: 13px; margin: 10px 0; }
-    .reserva p { margin: 5px 0; font-size: 14px; color: #334155; }
-    .btn-eliminar { background: linear-gradient(135deg, #ef4444, #b91c1c); }
-    .btn-eliminar-viaje { background: linear-gradient(135deg, #7f1d1d, #450a0a); margin-bottom: 15px; }
-    .advertencia { background: #fff7ed; color: #9a3412; border: 1px solid #fdba74; padding: 11px; border-radius: 13px; font-size: 13px; text-align: center; margin: 12px 0; font-weight: bold; }
-    .vacio { text-align: center; color: #64748b; font-size: 14px; }
-    #panelAdmin { display: none; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #061a33;
+      color: #111827;
+    }
+
+    .hero {
+      padding: 36px 18px 78px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .contenedor {
+      max-width: 430px;
+      margin: -55px auto 35px;
+      padding: 0 14px;
+    }
+
+    .viaje-resumen {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      border-left: 7px solid #ff9f1c;
+      cursor: pointer;
+    }
+
+    .viaje-resumen h2 {
+      margin: 0 0 8px;
+      color: #082f5f;
+      font-size: 21px;
+    }
+
+    .viaje-resumen p {
+      margin: 5px 0;
+      color: #475569;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .indicador {
+      float: right;
+      font-size: 25px;
+      color: #ff9f1c;
+      font-weight: bold;
+    }
+
+    .viaje-detalle {
+      display: none;
+    }
+
+    .viaje-detalle.abierto {
+      display: block;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 14px 0 22px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      border-top: 7px solid #00509d;
+    }
+
+    .info-viaje {
+      background: #eef6ff;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .info-viaje strong {
+      color: #082f5f;
+      font-size: 19px;
+    }
+
+    .datos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .dato {
+      background: #f1f7ff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #0f3057;
+      font-weight: bold;
+    }
+
+    .gps-panel {
+      background: #f8fbff;
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      padding: 15px;
+      margin: 14px 0 18px;
+    }
+
+    .gps-panel h3 {
+      text-align: center;
+      color: #082f5f;
+      margin: 0 0 10px;
+    }
+
+    .gps-estado {
+      text-align: center;
+      padding: 10px;
+      border-radius: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    .gps-activo {
+      background: #dcfce7;
+      color: #14532d;
+      border: 1px solid #22c55e;
+    }
+
+    .gps-inactivo {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border: 1px solid #ef4444;
+    }
+
+    .gps-botones {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .btn-iniciar {
+      background: linear-gradient(135deg, #0077ff, #004fbd);
+    }
+
+    .btn-finalizar {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .gps-nota {
+      color: #64748b;
+      font-size: 12px;
+      text-align: center;
+      margin: 10px 0 0;
+    }
+
+    .pasajeros-titulo {
+      text-align: center;
+      color: #082f5f;
+      margin: 14px 0;
+    }
+
+    .pasajero {
+      background: #f8fbff;
+      border: 1px solid #dbeafe;
+      border-radius: 16px;
+      padding: 15px;
+      margin: 12px 0;
+    }
+
+    .pasajero strong {
+      color: #082f5f;
+      font-size: 17px;
+    }
+
+    .pasajero p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .estado {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .pendiente {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .abordo {
+      background: #dcfce7;
+      color: #14532d;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 13px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #22c55e, #15803d);
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .btn-pendiente {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .vacio {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      padding: 12px;
+    }
+
+    .resumen-cupos {
+      margin-top: 14px;
+      background: #dcfce7;
+      border: 1px solid #22c55e;
+      color: #14532d;
+      padding: 12px;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
 
 <div class="hero">
-  <h1>Panel Administrativo</h1>
-  <p>Resumen general de viajes, ventas y recaudación.</p>
+  <h1>Panel del Conductor</h1>
+  <p>Revisa los viajes, pasajeros y comparte tu ubicación.</p>
 </div>
 
 <div class="contenedor">
-  <div id="login" class="card">
-    <h2>Acceso administrador</h2>
-    <input id="clave" type="password" placeholder="Ingresa la clave">
-    <button onclick="entrarAdmin()">Entrar</button>
-  </div>
-
-  <div id="panelAdmin">
-    <div class="card">
-      <h2>Resumen de viajes 🚗</h2>
-      <p class="subtitulo-card">Control general de viajes y ocupación</p>
-      <div class="dashboard">
-        <div class="dash-card">Viajes totales <span id="totalViajes">0</span></div>
-        <div class="dash-card">Con reservas <span id="viajesConReservas">0</span></div>
-        <div class="dash-card">Viajes llenos <span id="viajesLlenos">0</span></div>
-        <div class="dash-card">Pasajes vendidos <span id="pasajesVendidos">0</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>Resumen financiero 💰</h2>
-      <p class="subtitulo-card">Recaudación estimada según reservas registradas</p>
-      <div class="dashboard">
-        <div class="dash-card finanza">Hoy <span id="dineroHoy">$0</span></div>
-        <div class="dash-card finanza">Esta semana <span id="dineroSemana">$0</span></div>
-        <div class="dash-card finanza">Este mes <span id="dineroMes">$0</span></div>
-        <div class="dash-card finanza">Histórico <span id="dineroTotal">$0</span></div>
-      </div>
-      <div class="dashboard" style="margin-top: 11px;">
-        <div class="dash-card finanza">Promedio / viaje <span id="promedioViaje">$0</span></div>
-        <div class="dash-card finanza">Promedio / pasajero <span id="promedioPasajero">$0</span></div>
-      </div>
-    </div>
-
-    <div id="listaViajes"></div>
-  </div>
+  <div id="viajes"></div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -91,237 +278,294 @@
 <script src="firebase-config.js"></script>
 
 <script>
-const PASSWORD = "maule2026";
 const CAPACIDAD = 4;
-let viajesData = [];
-let reservasData = [];
 
-function entrarAdmin() {
-  const clave = document.getElementById("clave").value;
-  if (clave !== PASSWORD) {
-    alert("Clave incorrecta");
-    return;
-  }
-  document.getElementById("login").style.display = "none";
-  document.getElementById("panelAdmin").style.display = "block";
-  cargarDatos();
-}
+let gpsWatchId = null;
+let viajeGpsActivo = null;
+let gpsListeners = {};
 
-function cargarDatos() {
-  db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
-    viajesData = [];
-    snapshot.forEach(doc => viajesData.push({ id: doc.id, ...doc.data() }));
-    renderAdmin();
-  });
-
-  db.collection("reservas").onSnapshot(snapshot => {
-    reservasData = [];
-    snapshot.forEach(doc => reservasData.push({ id: doc.id, ...doc.data() }));
-    renderAdmin();
-  });
-}
-
-function obtenerFecha(valor) {
-  if (!valor) return null;
-
-  if (valor.toDate) {
-    return valor.toDate();
-  }
-
-  if (valor instanceof Date) {
-    return valor;
-  }
-
-  const fecha = new Date(valor);
-  return isNaN(fecha.getTime()) ? null : fecha;
-}
-
-function esMismoDia(fecha, referencia) {
-  return fecha &&
-    fecha.getFullYear() === referencia.getFullYear() &&
-    fecha.getMonth() === referencia.getMonth() &&
-    fecha.getDate() === referencia.getDate();
-}
-
-function inicioSemana(fecha) {
-  const f = new Date(fecha);
-  const dia = f.getDay();
-  const diferencia = dia === 0 ? -6 : 1 - dia;
-  f.setDate(f.getDate() + diferencia);
-  f.setHours(0, 0, 0, 0);
-  return f;
-}
-
-function esMismaSemana(fecha, referencia) {
-  if (!fecha) return false;
-  const inicio = inicioSemana(referencia);
-  const fin = new Date(inicio);
-  fin.setDate(inicio.getDate() + 7);
-  return fecha >= inicio && fecha < fin;
-}
-
-function esMismoMes(fecha, referencia) {
-  return fecha &&
-    fecha.getFullYear() === referencia.getFullYear() &&
-    fecha.getMonth() === referencia.getMonth();
-}
-
-function formatoMoneda(valor) {
-  return "$" + Math.round(Number(valor || 0)).toLocaleString("es-CL");
-}
-
-function renderAdmin() {
-  const totalViajes = viajesData.length;
-  const viajesConReservas = viajesData.filter(v => reservasData.some(r => r.viajeId === v.id)).length;
-
-  let pasajesVendidos = 0;
-  let dineroTotal = 0;
-  let dineroHoy = 0;
-  let dineroSemana = 0;
-  let dineroMes = 0;
-
-  const hoy = new Date();
-
-  reservasData.forEach(r => {
-    const cupos = Number(r.cupos || 0);
-    const total = Number(r.precioTotal || 0);
-    const fechaReserva = obtenerFecha(r.creado);
-
-    pasajesVendidos += cupos;
-    dineroTotal += total;
-
-    if (esMismoDia(fechaReserva, hoy)) dineroHoy += total;
-    if (esMismaSemana(fechaReserva, hoy)) dineroSemana += total;
-    if (esMismoMes(fechaReserva, hoy)) dineroMes += total;
-  });
-
-  let viajesLlenos = 0;
-  viajesData.forEach(v => {
-    const reservasViaje = reservasData.filter(r => r.viajeId === v.id);
-    const cuposViaje = reservasViaje.reduce((acc, r) => acc + Number(r.cupos || 0), 0);
-    if (cuposViaje >= CAPACIDAD) viajesLlenos++;
-  });
-
-  const promedioViaje = totalViajes > 0 ? dineroTotal / totalViajes : 0;
-  const promedioPasajero = pasajesVendidos > 0 ? dineroTotal / pasajesVendidos : 0;
-
-  document.getElementById("totalViajes").innerText = totalViajes;
-  document.getElementById("viajesConReservas").innerText = viajesConReservas;
-  document.getElementById("viajesLlenos").innerText = viajesLlenos;
-  document.getElementById("pasajesVendidos").innerText = pasajesVendidos;
-
-  document.getElementById("dineroHoy").innerText = formatoMoneda(dineroHoy);
-  document.getElementById("dineroSemana").innerText = formatoMoneda(dineroSemana);
-  document.getElementById("dineroMes").innerText = formatoMoneda(dineroMes);
-  document.getElementById("dineroTotal").innerText = formatoMoneda(dineroTotal);
-  document.getElementById("promedioViaje").innerText = formatoMoneda(promedioViaje);
-  document.getElementById("promedioPasajero").innerText = formatoMoneda(promedioPasajero);
-
-  const cont = document.getElementById("listaViajes");
+db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
+  const cont = document.getElementById("viajes");
   cont.innerHTML = "";
 
-  if (viajesData.length === 0) {
-    cont.innerHTML = `<div class="card"><p class="vacio">No hay viajes creados todavía.</p></div>`;
+  if (snapshot.empty) {
+    cont.innerHTML = `
+      <div class="card">
+        <p class="vacio">No hay viajes creados todavía.</p>
+      </div>
+    `;
     return;
   }
 
-  viajesData.forEach(v => {
-    const reservasViaje = reservasData.filter(r => r.viajeId === v.id);
-    let cupos = 0;
-    let recaudado = 0;
-
-    reservasViaje.forEach(r => {
-      cupos += Number(r.cupos || 0);
-      recaudado += Number(r.precioTotal || 0);
-    });
+  snapshot.forEach(doc => {
+    const v = doc.data();
+    const viajeId = doc.id;
 
     cont.innerHTML += `
-      <div class="viaje-resumen" onclick="toggleViaje('${v.id}')">
-        <span class="indicador" id="indicador-${v.id}">+</span>
-        <h3>${v.origen} → ${v.destino}</h3>
-        <p>📅 ${v.fecha} | 🕒 ${v.hora}</p>
-        <p>👥 Vendidos: ${cupos}/${CAPACIDAD}</p>
-        <p>💰 Recaudado: ${formatoMoneda(recaudado)}</p>
+      <div class="viaje-resumen" onclick="toggleViaje('${viajeId}')">
+        <span class="indicador" id="indicador-${viajeId}">+</span>
+        <h2>${v.origen} → ${v.destino}</h2>
+        <p>📅 ${v.fecha}</p>
+        <p>🕒 ${v.hora}</p>
+        <p>👤 ${v.conductor || "Conductor no asignado"}</p>
       </div>
 
-      <div class="viaje-detalle" id="detalle-${v.id}">
+      <div class="viaje-detalle" id="detalle-${viajeId}">
         <div class="card">
-          <div class="mini-info">
-            <div class="dato">Precio: ${formatoMoneda(v.precioAsiento || 0)}</div>
-            <div class="dato">Cupos: ${cupos}/${CAPACIDAD}</div>
-            <div class="dato">Conductor: ${v.conductor || "Sin conductor"}</div>
-            <div class="dato">Vehículo: ${v.vehiculo || "Sin vehículo"}</div>
+          <div class="info-viaje">
+            <strong>${v.origen} → ${v.destino}</strong>
+
+            <div class="datos">
+              <div class="dato">📅 ${v.fecha}</div>
+              <div class="dato">🕒 ${v.hora}</div>
+              <div class="dato">👤 ${v.conductor || "Sin conductor"}</div>
+              <div class="dato">🚘 ${v.vehiculo || "Sin vehículo"}</div>
+            </div>
           </div>
 
-          <div class="advertencia">Al eliminar el viaje completo también se eliminarán todas sus reservas.</div>
+          <div class="gps-panel">
+            <h3>Seguimiento GPS</h3>
 
-          <button class="btn-eliminar-viaje" onclick="eliminarViajeCompleto(event, '${v.id}')">Eliminar viaje completo</button>
+            <div class="gps-estado" id="gps-estado-${viajeId}">
+              Estado: sin iniciar
+            </div>
 
-          <h3>Reservas</h3>
-          ${renderReservas(reservasViaje)}
+            <div class="gps-botones">
+              <button class="btn-iniciar" id="btn-iniciar-${viajeId}" onclick="iniciarViaje(event, '${viajeId}')">
+                Iniciar viaje
+              </button>
+
+              <button class="btn-finalizar" id="btn-finalizar-${viajeId}" onclick="finalizarViaje(event, '${viajeId}')">
+                Finalizar viaje
+              </button>
+            </div>
+
+            <p class="gps-nota">
+              Mantén esta página abierta para compartir la ubicación en tiempo real.
+            </p>
+          </div>
+
+          <div id="pasajeros-${viajeId}">
+            <p class="vacio">Cargando pasajeros...</p>
+          </div>
         </div>
       </div>
     `;
+
+    cargarPasajeros(viajeId);
+    escucharEstadoGPS(viajeId);
+  });
+});
+
+function cargarPasajeros(viajeId) {
+  db.collection("reservas")
+    .where("viajeId", "==", viajeId)
+    .onSnapshot(snapshot => {
+      let html = `<h3 class="pasajeros-titulo">Pasajeros</h3>`;
+      let cuposTotales = 0;
+
+      if (snapshot.empty) {
+        html += `<p class="vacio">No hay pasajeros registrados aún.</p>`;
+      }
+
+      snapshot.forEach(doc => {
+        const r = doc.data();
+        const estado = r.estadoAbordaje || "pendiente";
+        const cupos = Number(r.cupos || 1);
+        cuposTotales += cupos;
+
+        html += `
+          <div class="pasajero">
+            <strong>${r.nombre}</strong>
+            <p>📱 ${r.telefono || "Sin teléfono"}</p>
+            <p>📍 Subida: ${r.abordaje || "No indicada"}</p>
+            <p>👥 Pasajeros: ${cupos}</p>
+            <p>💰 Total: $${r.precioTotal || 0}</p>
+
+            <span class="estado ${estado}">
+              ${estado === "abordo" ? "Abordó" : "Pendiente"}
+            </span>
+
+            ${
+              estado === "abordo"
+              ? `<button class="btn-pendiente" onclick="marcarPendiente('${doc.id}')">Marcar pendiente</button>`
+              : `<button onclick="marcarAbordo('${doc.id}')">Marcar abordó</button>`
+            }
+          </div>
+        `;
+      });
+
+      html += `
+        <div class="resumen-cupos">
+          Cupos ocupados: ${cuposTotales} de ${CAPACIDAD}
+        </div>
+      `;
+
+      const cont = document.getElementById(`pasajeros-${viajeId}`);
+      if (cont) cont.innerHTML = html;
+    });
+}
+
+function escucharEstadoGPS(viajeId) {
+  if (gpsListeners[viajeId]) return;
+
+  gpsListeners[viajeId] = db.collection("gps").doc(viajeId).onSnapshot(doc => {
+    const estado = document.getElementById(`gps-estado-${viajeId}`);
+    const btnIniciar = document.getElementById(`btn-iniciar-${viajeId}`);
+    const btnFinalizar = document.getElementById(`btn-finalizar-${viajeId}`);
+
+    if (!estado || !btnIniciar || !btnFinalizar) return;
+
+    if (!doc.exists || !doc.data().enViaje) {
+      estado.className = "gps-estado gps-inactivo";
+      estado.innerText = "Estado: viaje sin seguimiento activo";
+      btnIniciar.disabled = false;
+      btnFinalizar.disabled = false;
+      return;
+    }
+
+    const data = doc.data();
+
+    estado.className = "gps-estado gps-activo";
+    estado.innerText = "🟢 Viaje en curso · GPS compartiendo ubicación";
+
+    btnIniciar.disabled = true;
+    btnFinalizar.disabled = false;
   });
 }
 
-function renderReservas(reservas) {
-  if (reservas.length === 0) {
-    return `<p class="vacio">Este viaje aún no tiene reservas.</p>`;
+function iniciarViaje(event, viajeId) {
+  event.stopPropagation();
+
+  if (!navigator.geolocation) {
+    alert("Este celular o navegador no permite usar GPS.");
+    return;
   }
 
-  let html = "";
-  reservas.forEach(r => {
-    html += `
-      <div class="reserva">
-        <p><strong>${r.nombre || "Sin nombre"}</strong></p>
-        <p>👥 ${r.cupos || 0} pasajero(s) | 💰 ${formatoMoneda(r.precioTotal || 0)}</p>
-        <button class="btn-eliminar" onclick="eliminarReserva(event, '${r.id}')">Eliminar pasaje</button>
-      </div>
-    `;
-  });
-  return html;
+  if (gpsWatchId !== null && viajeGpsActivo && viajeGpsActivo !== viajeId) {
+    alert("Ya hay otro viaje compartiendo ubicación en este celular. Finalízalo antes de iniciar otro.");
+    return;
+  }
+
+  const btn = document.getElementById(`btn-iniciar-${viajeId}`);
+  const estado = document.getElementById(`gps-estado-${viajeId}`);
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerText = "Solicitando GPS...";
+  }
+
+  if (estado) {
+    estado.className = "gps-estado";
+    estado.innerText = "Solicitando permiso de ubicación...";
+  }
+
+  gpsWatchId = navigator.geolocation.watchPosition(
+    position => {
+      viajeGpsActivo = viajeId;
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      const precision = position.coords.accuracy;
+
+      db.collection("gps").doc(viajeId).set({
+        viajeId,
+        lat,
+        lng,
+        precision,
+        enViaje: true,
+        actualizado: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      if (btn) {
+        btn.innerText = "Viaje iniciado";
+      }
+    },
+    error => {
+      console.error(error);
+
+      let mensaje = "No se pudo obtener la ubicación.";
+
+      if (error.code === 1) {
+        mensaje = "Debes permitir el acceso a la ubicación para iniciar el viaje.";
+      }
+
+      alert(mensaje);
+
+      gpsWatchId = null;
+      viajeGpsActivo = null;
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = "Iniciar viaje";
+      }
+
+      if (estado) {
+        estado.className = "gps-estado gps-inactivo";
+        estado.innerText = "Estado: GPS no iniciado";
+      }
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 5000,
+      timeout: 15000
+    }
+  );
 }
 
-function toggleViaje(id) {
-  const detalle = document.getElementById(`detalle-${id}`);
-  const indicador = document.getElementById(`indicador-${id}`);
+function finalizarViaje(event, viajeId) {
+  event.stopPropagation();
+
+  const confirmar = confirm("¿Seguro que quieres finalizar el seguimiento GPS de este viaje?");
+  if (!confirmar) return;
+
+  if (gpsWatchId !== null && viajeGpsActivo === viajeId) {
+    navigator.geolocation.clearWatch(gpsWatchId);
+    gpsWatchId = null;
+    viajeGpsActivo = null;
+  }
+
+  db.collection("gps").doc(viajeId).set({
+    viajeId,
+    enViaje: false,
+    finalizado: firebase.firestore.FieldValue.serverTimestamp(),
+    actualizado: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true })
+  .then(() => {
+    const btn = document.getElementById(`btn-iniciar-${viajeId}`);
+    if (btn) {
+      btn.disabled = false;
+      btn.innerText = "Iniciar viaje";
+    }
+
+    alert("Seguimiento GPS finalizado.");
+  })
+  .catch(error => {
+    console.error(error);
+    alert("No se pudo finalizar el viaje.");
+  });
+}
+
+function toggleViaje(viajeId) {
+  const detalle = document.getElementById(`detalle-${viajeId}`);
+  const indicador = document.getElementById(`indicador-${viajeId}`);
+
   if (!detalle) return;
+
   detalle.classList.toggle("abierto");
   indicador.innerText = detalle.classList.contains("abierto") ? "−" : "+";
 }
 
-function eliminarReserva(event, id) {
-  event.stopPropagation();
-  const confirmar = confirm("¿Seguro que quieres eliminar este pasaje? Esta acción borrará la reserva de Firebase.");
-  if (!confirmar) return;
-
-  db.collection("reservas").doc(id).delete()
-    .then(() => alert("Reserva eliminada correctamente"))
-    .catch(error => {
-      console.error(error);
-      alert("No se pudo eliminar la reserva");
-    });
+function marcarAbordo(reservaId) {
+  db.collection("reservas").doc(reservaId).update({
+    estadoAbordaje: "abordo"
+  });
 }
 
-async function eliminarViajeCompleto(event, viajeId) {
-  event.stopPropagation();
-  const confirmar = confirm("¿Seguro que quieres eliminar este viaje completo? También se eliminarán todas sus reservas.");
-  if (!confirmar) return;
-
-  try {
-    const reservasSnapshot = await db.collection("reservas").where("viajeId", "==", viajeId).get();
-    const batch = db.batch();
-
-    reservasSnapshot.forEach(doc => batch.delete(doc.ref));
-    batch.delete(db.collection("viajes").doc(viajeId));
-
-    await batch.commit();
-    alert("Viaje y reservas eliminados correctamente");
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo eliminar el viaje completo");
-  }
+function marcarPendiente(reservaId) {
+  db.collection("reservas").doc(reservaId).update({
+    estadoAbordaje: "pendiente"
+  });
 }
 </script>
 
