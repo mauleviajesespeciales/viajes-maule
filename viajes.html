@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Viajes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Gestión de Viajes</h1>
+
+  <div class="nav">
+    <a href="index.html">Cliente</a>
+    <a href="conductor.html">Conductor</a>
+    <a href="admin.html">Admin</a>
+  </div>
+
+  <div class="card">
+    <h2>Crear nuevo viaje</h2>
+
+    <input id="origen" placeholder="Origen">
+    <input id="destino" placeholder="Destino">
+    <input id="fecha" type="date">
+    <input id="hora" type="time">
+    <input id="precio" type="number" placeholder="Precio por asiento">
+    <input id="conductor" placeholder="Nombre del conductor">
+    <input id="vehiculo" placeholder="Vehículo / patente">
+
+    <button onclick="crearViaje()">Crear viaje</button>
+  </div>
+
+  <div id="listaViajes"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+function crearViaje() {
+  const viaje = {
+    origen: document.getElementById("origen").value,
+    destino: document.getElementById("destino").value,
+    fecha: document.getElementById("fecha").value,
+    hora: document.getElementById("hora").value,
+    precioAsiento: Number(document.getElementById("precio").value),
+    conductor: document.getElementById("conductor").value,
+    vehiculo: document.getElementById("vehiculo").value,
+    capacidad: 12,
+    estado: "activo",
+    creado: new Date()
+  };
+
+  if (!viaje.origen || !viaje.destino || !viaje.fecha || !viaje.hora || !viaje.precioAsiento) {
+    alert("Completa los datos obligatorios");
+    return;
+  }
+
+  db.collection("viajes").add(viaje).then(() => {
+    alert("Viaje creado correctamente");
+    location.reload();
+  });
+}
+
+db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
+  const cont = document.getElementById("listaViajes");
+  cont.innerHTML = "<h2>Viajes creados</h2>";
+
+  snapshot.forEach(doc => {
+    const v = doc.data();
+    cont.innerHTML += `
+      <div class="card">
+        <strong>${v.origen} → ${v.destino}</strong><br>
+        Fecha: ${v.fecha} | Hora: ${v.hora}<br>
+        Precio: $${v.precioAsiento}<br>
+        Conductor: ${v.conductor || "No asignado"}<br>
+        Vehículo: ${v.vehiculo || "No asignado"}<br><br>
+        <button onclick="cerrarViaje('${doc.id}')">Cerrar venta</button>
+      </div>
+    `;
+  });
+});
+
+function cerrarViaje(id) {
+  db.collection("viajes").doc(id).update({
+    estado: "cerrado"
+  });
+}
+</script>
+
+</body>
+</html>

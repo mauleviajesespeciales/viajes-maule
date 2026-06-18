@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Conductor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Panel del Conductor</h1>
+
+  <div class="nav">
+    <a href="index.html">Cliente</a>
+    <a href="viajes.html">Crear viajes</a>
+    <a href="admin.html">Admin</a>
+  </div>
+
+  <div id="viajes"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+db.collection("viajes").onSnapshot(snapshot => {
+  const cont = document.getElementById("viajes");
+  cont.innerHTML = "";
+
+  snapshot.forEach(doc => {
+    const v = doc.data();
+
+    cont.innerHTML += `
+      <div class="card">
+        <h2>${v.origen} → ${v.destino}</h2>
+        <p>${v.fecha} | ${v.hora}</p>
+        <p>Conductor: ${v.conductor || "No asignado"}</p>
+        <div id="pasajeros-${doc.id}">Cargando pasajeros...</div>
+      </div>
+    `;
+
+    cargarPasajeros(doc.id);
+  });
+});
+
+function cargarPasajeros(viajeId) {
+  db.collection("reservas")
+    .where("viajeId", "==", viajeId)
+    .onSnapshot(snapshot => {
+      let html = "<h3>Pasajeros</h3>";
+
+      if (snapshot.empty) {
+        html += "<p>No hay pasajeros aún.</p>";
+      }
+
+      snapshot.forEach(doc => {
+        const r = doc.data();
+
+        html += `
+          <div class="card">
+            <strong>${r.nombre}</strong><br>
+            Teléfono: ${r.telefono}<br>
+            Tipo: ${r.tipo}<br>
+            Asiento: ${r.asiento || "Minivan completa"}<br>
+            Estado: ${r.estadoAbordaje}<br><br>
+            <button onclick="marcarAbordo('${doc.id}')">Marcó abordo</button>
+          </div>
+        `;
+      });
+
+      document.getElementById(`pasajeros-${viajeId}`).innerHTML = html;
+    });
+}
+
+function marcarAbordo(reservaId) {
+  db.collection("reservas").doc(reservaId).update({
+    estadoAbordaje: "abordo"
+  });
+}
+</script>
+
+</body>
+</html>

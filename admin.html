@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resumen Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Resumen Administrativo</h1>
+
+  <div class="nav">
+    <a href="index.html">Cliente</a>
+    <a href="viajes.html">Crear viajes</a>
+    <a href="conductor.html">Conductor</a>
+  </div>
+
+  <div id="resumen"></div>
+  <div id="detalle"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+db.collection("reservas").onSnapshot(snapshot => {
+  let totalReservas = 0;
+  let totalDinero = 0;
+  let pasajes = 0;
+  let completas = 0;
+  let detalle = "";
+
+  snapshot.forEach(doc => {
+    const r = doc.data();
+
+    totalReservas++;
+
+    if (r.tipo === "pasaje") {
+      pasajes++;
+      totalDinero += Number(r.precio || 0);
+    }
+
+    if (r.tipo === "minivan_completa") {
+      completas++;
+    }
+
+    detalle += `
+      <div class="card">
+        <strong>${r.nombre}</strong><br>
+        Teléfono: ${r.telefono}<br>
+        Tipo: ${r.tipo}<br>
+        Asiento: ${r.asiento || "Completa"}<br>
+        Precio: $${r.precio || 0}<br>
+        Pagado: ${r.pagado ? "Sí" : "No"}
+      </div>
+    `;
+  });
+
+  document.getElementById("resumen").innerHTML = `
+    <div class="card">
+      <h2>Resumen general</h2>
+      <p>Total reservas: ${totalReservas}</p>
+      <p>Pasajes vendidos: ${pasajes}</p>
+      <p>Minivans completas reservadas: ${completas}</p>
+      <p><strong>Total recaudado estimado: $${totalDinero}</strong></p>
+    </div>
+  `;
+
+  document.getElementById("detalle").innerHTML = `
+    <h2>Detalle de reservas</h2>
+    ${detalle}
+  `;
+});
+</script>
+
+</body>
+</html>

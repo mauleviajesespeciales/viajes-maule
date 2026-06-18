@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservar Pasaje</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="contenedor">
+  <h1>Viajes Especiales Maule</h1>
+
+  <div class="nav">
+    <a href="viajes.html">Crear viajes</a>
+    <a href="conductor.html">Conductor</a>
+    <a href="admin.html">Admin</a>
+  </div>
+
+  <div id="viajes"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+let asientoSeleccionado = null;
+
+db.collection("viajes")
+  .where("estado", "==", "activo")
+  .onSnapshot(snapshot => {
+    const cont = document.getElementById("viajes");
+    cont.innerHTML = "";
+
+    snapshot.forEach(doc => {
+      const v = doc.data();
+      cont.innerHTML += `
+        <div class="card">
+          <h2>${v.origen} → ${v.destino}</h2>
+          <p>Fecha: ${v.fecha} | Hora: ${v.hora}</p>
+          <p>Precio por asiento: $${v.precioAsiento}</p>
+
+          <button onclick="mostrarAsientos('${doc.id}', ${v.precioAsiento})">
+            Comprar pasaje
+          </button>
+
+          <button onclick="reservarCompleto('${doc.id}')">
+            Reservar minivan completa
+          </button>
+
+          <div id="asientos-${doc.id}"></div>
+        </div>
+      `;
+    });
+  });
+
+function mostrarAsientos(viajeId, precio) {
+  asientoSeleccionado = null;
+
+  db.collection("reservas")
+    .where("viajeId", "==", viajeId)
+    .get()
+    .then(snapshot => {
+      const ocupados = [];
+
+      snapshot.forEach(doc => {
+        const r = doc.data();
+        if (r.asiento) ocupados.push(r.asiento);
+      });
+
+      let html = `
+        <h3>Selecciona tu asiento</h3>
+        <div class="asientos">
+      `;
+
+      for (let i = 1; i <= 12; i++) {
+        const ocupado = ocupados.includes(i);
+        html += `
+          <div 
+            class="asiento ${ocupado ? "ocupado" : "disponible"}"
+            onclick="${ocupado ? "" : `seleccionarAsiento('${viajeId}', ${i}, ${precio})`}"
+            id="asiento-${viajeId}-${i}">
+            ${i}
+          </div>
+        `;
+      }
+
+      html += `
+        </div>
+
+        <input id="nombre-${viajeId}" placeholder="Nombre pasajero">
+        <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
+
+        <button onclick="confirmarReserva('${viajeId}', ${precio})">
+          Confirmar reserva
+        </button>
+      `;
+
+      document.getElementById(`asientos-${viajeId}`).innerHTML = html;
+    });
+}
+
+function seleccionarAsiento(viajeId, asiento, precio) {
+  asientoSeleccionado = asiento;
+
+  for (let i = 1; i <= 12; i++) {
+    const el = document.getElementById(`asiento-${viajeId}-${i}`);
+    if (el && el.classList.contains("disponible")) {
+      el.classList.remove("seleccionado");
+    }
+  }
+
+  document.getElementById(`asiento-${viajeId}-${asiento}`).classList.add("seleccionado");
+}
+
+function confirmarReserva(viajeId, precio) {
+  const nombre = document.getElementById(`nombre-${viajeId}`).value;
+  const telefono = document.getElementById(`telefono-${viajeId}`).value;
+
+  if (!asientoSeleccionado) {
+    alert("Selecciona un asiento");
+    return;
+  }
+
+  if (!nombre || !telefono) {
+    alert("Completa nombre y teléfono");
+    return;
+  }
+
+  db.collection("reservas").add({
+    viajeId,
+    nombre,
+    telefono,
+    asiento: asientoSeleccionado,
+    tipo: "pasaje",
+    precio,
+    pagado: false,
+    estadoAbordaje: "pendiente",
+    creado: new Date()
+  }).then(() => {
+    alert("Reserva realizada correctamente");
+    location.reload();
+  });
+}
+
+function reservarCompleto(viajeId) {
+  const nombre = prompt("Nombre de quien reserva la minivan completa:");
+  const telefono = prompt("Teléfono WhatsApp:");
+
+  if (!nombre || !telefono) return;
+
+  db.collection("reservas").add({
+    viajeId,
+    nombre,
+    telefono,
+    tipo: "minivan_completa",
+    precio: 0,
+    pagado: false,
+    estadoAbordaje: "pendiente",
+    creado: new Date()
+  }).then(() => {
+    db.collection("viajes").doc(viajeId).update({
+      estado: "reservado_completo"
+    });
+
+    alert("Minivan completa reservada");
+    location.reload();
+  });
+}
+</script>
+
+</body>
+</html>
