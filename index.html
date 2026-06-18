@@ -61,9 +61,56 @@
       background: white;
       border-radius: 22px;
       padding: 20px;
-      margin: 18px 0;
+      margin: 14px 0 20px;
       box-shadow: 0 14px 35px rgba(0,0,0,0.25);
       border-top: 7px solid #ff9f1c;
+    }
+
+    .viaje-resumen {
+      background: white;
+      border-radius: 20px;
+      padding: 17px;
+      margin: 16px 0;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      border-left: 7px solid #ff9f1c;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .viaje-resumen h3 {
+      margin: 0 30px 8px 0;
+      color: #082f5f;
+      font-size: 20px;
+    }
+
+    .viaje-resumen p {
+      margin: 5px 0;
+      color: #475569;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .indicador {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      background: #ff9f1c;
+      color: white;
+      border-radius: 50%;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .viaje-detalle {
+      display: none;
+    }
+
+    .viaje-detalle.abierto {
+      display: block;
     }
 
     .ruta {
@@ -166,6 +213,40 @@
       font-size: 15px;
     }
 
+    .telefono-wrapper {
+      display: flex;
+      align-items: center;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 7px 0 6px;
+      background: white;
+    }
+
+    .prefijo {
+      background: #eef6ff;
+      padding: 13px 14px;
+      font-weight: bold;
+      color: #082f5f;
+      border-right: 1px solid #cbd5e1;
+    }
+
+    .telefono-wrapper input {
+      border: none !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .telefono-wrapper input:focus {
+      outline: none;
+    }
+
+    .telefono-ayuda {
+      font-size: 12px;
+      color: #64748b;
+      margin: 4px 0 12px;
+    }
+
     .resumen {
       background: white;
       border: 2px dashed #ff9f1c;
@@ -217,41 +298,6 @@
       text-align: center;
       margin-top: 10px;
     }
-
-    .telefono-wrapper {
-  display: flex;
-  align-items: center;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 7px 0 6px;
-  background: white;
-}
-
-.prefijo {
-  background: #eef6ff;
-  padding: 13px 14px;
-  font-weight: bold;
-  color: #082f5f;
-  border-right: 1px solid #cbd5e1;
-}
-
-.telefono-wrapper input {
-  border: none !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-}
-
-.telefono-wrapper input:focus {
-  outline: none;
-}
-
-.telefono-ayuda {
-  font-size: 12px;
-  color: #64748b;
-  margin: 4px 0 12px;
-}
-    
   </style>
 </head>
 
@@ -329,31 +375,28 @@ function cargarViajeConCupos(viajeId, v) {
           </select>
 
           <label>Nombre de quien reserva</label>
-          
           <input id="nombre-${viajeId}" placeholder="Ej: María González" oninput="actualizarResumen('${viajeId}', ${precio})">
 
-          <label>Teléfono WhatsApp</label>
-         <label>WhatsApp</label>
-<div class="telefono-wrapper">
-  <span class="prefijo">+56</span>
-  <input 
-    id="telefono-${viajeId}" 
-    placeholder="912345678"
-    maxlength="9"
-    inputmode="numeric"
-    oninput="
-      this.value = this.value.replace(/[^0-9]/g, '').slice(0,9);
-      actualizarResumen('${viajeId}', ${precio});
-    "
-  >
-</div>
+          <label>WhatsApp</label>
+          <div class="telefono-wrapper">
+            <span class="prefijo">+56</span>
+            <input 
+              id="telefono-${viajeId}" 
+              placeholder="912345678"
+              maxlength="9"
+              inputmode="numeric"
+              oninput="
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0,9);
+                actualizarResumen('${viajeId}', ${precio});
+              "
+            >
+          </div>
 
-<p class="telefono-ayuda">
-  Escribe tu número sin +56. Lo usaremos para contactarte sobre tu viaje.
-</p>
+          <p class="telefono-ayuda">
+            Escribe tu número sin +56. Lo usaremos para contactarte sobre tu viaje.
+          </p>
+
           <label>Punto de abordaje / subida</label>
-
-          
           <input id="abordaje-${viajeId}" placeholder="Ej: Terminal Talca, plaza, domicilio..." oninput="actualizarResumen('${viajeId}', ${precio})">
 
           <div class="resumen" id="resumen-${viajeId}">
@@ -374,31 +417,40 @@ function cargarViajeConCupos(viajeId, v) {
       `;
 
       document.getElementById("viajes").innerHTML += `
-        <div class="card">
-          <div class="ruta">
-            <div>
-              <span>Origen</span>
-              <h2>${v.origen}</h2>
+        <div class="viaje-resumen" onclick="toggleViaje('${viajeId}')">
+          <span class="indicador" id="indicador-${viajeId}">+</span>
+          <h3>${v.origen} → ${v.destino}</h3>
+          <p>📅 ${v.fecha}</p>
+          <p>🕒 ${v.hora}</p>
+        </div>
+
+        <div class="viaje-detalle" id="detalle-${viajeId}">
+          <div class="card">
+            <div class="ruta">
+              <div>
+                <span>Origen</span>
+                <h2>${v.origen}</h2>
+              </div>
+              <div class="flecha">↓</div>
+              <div>
+                <span>Destino</span>
+                <h2>${v.destino}</h2>
+              </div>
             </div>
-            <div class="flecha">↓</div>
-            <div>
-              <span>Destino</span>
-              <h2>${v.destino}</h2>
+
+            <div class="datos-viaje">
+              <div class="dato">📅 ${v.fecha}</div>
+              <div class="dato">🕒 ${v.hora}</div>
+              <div class="dato">🚗 4 pasajeros</div>
+              <div class="dato">💰 $${precio}</div>
             </div>
-          </div>
 
-          <div class="datos-viaje">
-            <div class="dato">📅 ${v.fecha}</div>
-            <div class="dato">🕒 ${v.hora}</div>
-            <div class="dato">🚗 4 pasajeros</div>
-            <div class="dato">💰 $${precio}</div>
-          </div>
+            <div class="cupos-box ${disponibles <= 0 ? "sin-cupos" : ""}">
+              Cupos disponibles: ${disponibles} de ${CAPACIDAD}
+            </div>
 
-          <div class="cupos-box ${disponibles <= 0 ? "sin-cupos" : ""}">
-            Cupos disponibles: ${disponibles} de ${CAPACIDAD}
+            ${formulario}
           </div>
-
-          ${formulario}
         </div>
       `;
 
@@ -411,7 +463,8 @@ function cargarViajeConCupos(viajeId, v) {
 function actualizarResumen(viajeId, precioUnitario) {
   const cupos = Number(document.getElementById(`cupos-${viajeId}`)?.value || 1);
   const nombre = document.getElementById(`nombre-${viajeId}`)?.value || "";
-  const telefono = document.getElementById(`telefono-${viajeId}`)?.value || "";
+  const telefonoIngresado = document.getElementById(`telefono-${viajeId}`)?.value || "";
+  const telefono = telefonoIngresado ? "+56" + telefonoIngresado : "";
   const abordaje = document.getElementById(`abordaje-${viajeId}`)?.value || "";
   const total = cupos * precioUnitario;
 
@@ -437,11 +490,16 @@ function confirmarReserva(viajeId, precioUnitario, origen, destino, fecha, hora)
   const cupos = Number(document.getElementById(`cupos-${viajeId}`).value);
   const nombre = document.getElementById(`nombre-${viajeId}`).value.trim();
   const telefonoIngresado = document.getElementById(`telefono-${viajeId}`).value.trim();
-const telefono = "+56" + telefonoIngresado;
+  const telefono = "+56" + telefonoIngresado;
   const abordaje = document.getElementById(`abordaje-${viajeId}`).value.trim();
 
-  if (!nombre || !telefono || !abordaje) {
+  if (!nombre || !telefonoIngresado || !abordaje) {
     alert("Completa nombre, teléfono y punto de subida");
+    return;
+  }
+
+  if (telefonoIngresado.length !== 9) {
+    alert("El WhatsApp debe tener 9 dígitos después del +56");
     return;
   }
 
@@ -496,12 +554,11 @@ const telefono = "+56" + telefonoIngresado;
 
 Quedo atento/a a la confirmación.`;
 
-const url = `https://wa.me/${WHATSAPP_EMPRESA}?text=${encodeURIComponent(mensaje)}`;
+        const url = `https://wa.me/${WHATSAPP_EMPRESA}?text=${encodeURIComponent(mensaje)}`;
 
-alert("Reserva registrada correctamente. Ahora se abrirá WhatsApp para confirmar.");
+        alert("Reserva registrada correctamente. Ahora se abrirá WhatsApp para confirmar.");
 
-window.location.href = url;
-        
+        window.location.href = url;
       }).catch(error => {
         console.error(error);
         alert("Ocurrió un error al guardar la reserva");
@@ -509,6 +566,21 @@ window.location.href = url;
         btn.innerText = "Confirmar y enviar WhatsApp";
       });
     });
+}
+
+function toggleViaje(viajeId) {
+  const detalle = document.getElementById(`detalle-${viajeId}`);
+  const indicador = document.getElementById(`indicador-${viajeId}`);
+
+  if (!detalle) return;
+
+  detalle.classList.toggle("abierto");
+
+  if (detalle.classList.contains("abierto")) {
+    indicador.innerText = "−";
+  } else {
+    indicador.innerText = "+";
+  }
 }
 </script>
 
