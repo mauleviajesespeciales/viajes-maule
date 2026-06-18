@@ -3,16 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <title>Viajes Especiales Maule</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #061a33;
+      color: #111827;
+    }
+
+    .hero {
+      min-height: 360px;
+      padding: 55px 20px 110px;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+        linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      border-bottom-left-radius: 45px;
+      border-bottom-right-radius: 45px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin: 0 0 12px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin: 8px 0;
+    }
+
+    .hero span {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 11px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.35);
+      font-weight: bold;
+    }
+
+    .contenedor {
+      max-width: 1050px;
+      margin: -80px auto 45px;
+      padding: 0 18px;
+    }
+
+    .titulo-seccion {
+      color: white;
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 26px;
+      padding: 28px;
+      margin: 22px 0;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.22);
+    }
+
+    .viaje-card {
+      border-top: 8px solid #ff9f1c;
+    }
+
+    .ruta {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(135deg, #f8fbff, #e8f2ff);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .ruta span {
+      color: #64748b;
+      font-size: 13px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .ruta h2 {
+      color: #082f5f;
+      font-size: 33px;
+      margin: 8px 0 0;
+    }
+
+    .flecha {
+      background: #ff9f1c;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .datos-viaje {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .datos-viaje p {
+      background: #eef6ff;
+      color: #0f3057;
+      border-radius: 16px;
+      padding: 16px 10px;
+      margin: 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0077ff, #004fbd);
+    }
+
+    .btn-secundario {
+      background: linear-gradient(135deg, #ff9f1c, #ff6b00);
+    }
+
+    .zona-asientos {
+      margin-top: 25px;
+      padding: 24px;
+      background: #f8fbff;
+      border: 1px solid #dbeafe;
+      border-radius: 22px;
+    }
+
+    .zona-asientos h3,
+    .leyenda {
+      text-align: center;
+    }
+
+    .leyenda {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .conductor-box {
+      width: 180px;
+      margin: 18px auto;
+      padding: 13px;
+      background: #111827;
+      color: white;
+      text-align: center;
+      border-radius: 14px;
+      font-weight: bold;
+    }
+
+    .asientos {
+      max-width: 420px;
+      margin: 0 auto 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .asiento {
+      padding: 18px;
+      border-radius: 14px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .disponible {
+      background: #dcfce7;
+      border: 2px solid #22c55e;
+    }
+
+    .ocupado {
+      background: #fee2e2;
+      border: 2px solid #ef4444;
+      cursor: not-allowed;
+    }
+
+    .seleccionado {
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .ruta {
+        grid-template-columns: 1fr;
+      }
+
+      .datos-viaje {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .contenedor {
+        margin-top: -65px;
+      }
+    }
+  </style>
 </head>
-<body class="cliente-body">
+
+<body>
 
 <div class="hero">
-  <div class="hero-content">
-    <h1>Viajes Especiales Maule</h1>
-    <p>Reserva tu pasaje o asegura una minivan completa para tu próximo viaje.</p>
-    <span>Traslados cómodos, seguros y organizados</span>
-  </div>
+  <h1>Viajes Especiales Maule</h1>
+  <p>Reserva tu pasaje o asegura una minivan completa para tu próximo viaje.</p>
+  <span>Traslados cómodos, seguros y organizados</span>
 </div>
 
 <div class="contenedor">
