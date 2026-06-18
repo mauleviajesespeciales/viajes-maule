@@ -2,16 +2,247 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Resumen Admin</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Viajes</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #061a33;
+      color: #111827;
+    }
+
+    .hero {
+      padding: 36px 18px 78px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .contenedor {
+      max-width: 430px;
+      margin: -55px auto 35px;
+      padding: 0 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 18px 0;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      border-top: 7px solid #ff9f1c;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #082f5f;
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0 12px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 13px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0077ff, #004fbd);
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 11px;
+    }
+
+    .dash-card {
+      background: #eef6ff;
+      border-radius: 16px;
+      padding: 15px 10px;
+      text-align: center;
+      color: #0f3057;
+      font-weight: bold;
+    }
+
+    .dash-card span {
+      display: block;
+      font-size: 22px;
+      color: #082f5f;
+      margin-top: 6px;
+    }
+
+    .viaje-resumen {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+      border-left: 7px solid #ff9f1c;
+      cursor: pointer;
+    }
+
+    .viaje-resumen h3 {
+      text-align: left;
+      margin: 0 0 8px;
+      color: #082f5f;
+      font-size: 20px;
+    }
+
+    .viaje-resumen p {
+      margin: 5px 0;
+      color: #475569;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .indicador {
+      float: right;
+      font-size: 25px;
+      color: #ff9f1c;
+      font-weight: bold;
+    }
+
+    .viaje-detalle {
+      display: none;
+    }
+
+    .viaje-detalle.abierto {
+      display: block;
+    }
+
+    .mini-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin: 12px 0;
+    }
+
+    .dato {
+      background: #f1f7ff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #0f3057;
+      font-weight: bold;
+    }
+
+    .reserva {
+      background: #f8fbff;
+      border: 1px solid #dbeafe;
+      border-radius: 15px;
+      padding: 13px;
+      margin: 10px 0;
+    }
+
+    .reserva p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .btn-eliminar {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .btn-cerrar {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .btn-activar {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+    }
+
+    .estado {
+      padding: 9px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .activo {
+      background: #dcfce7;
+      color: #14532d;
+      border: 1px solid #22c55e;
+    }
+
+    .cerrado {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border: 1px solid #ef4444;
+    }
+
+    .vacio {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    #panelAdmin {
+      display: none;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="contenedor">
-  <h1>Resumen Administrativo</h1>
+<div class="hero">
+  <h1>Panel Administrativo</h1>
+  <p>Resumen general de viajes, ventas y recaudación.</p>
+</div>
 
-  <div id="resumen"></div>
-  <div id="detalle"></div>
+<div class="contenedor">
+
+  <div id="login" class="card">
+    <h2>Acceso administrador</h2>
+    <input id="clave" type="password" placeholder="Ingresa la clave">
+    <button onclick="entrarAdmin()">Entrar</button>
+  </div>
+
+  <div id="panelAdmin">
+    <div class="card">
+      <h2>Resumen general</h2>
+      <div class="dashboard">
+        <div class="dash-card">Viajes totales <span id="totalViajes">0</span></div>
+        <div class="dash-card">Viajes activos <span id="viajesActivos">0</span></div>
+        <div class="dash-card">Pasajes vendidos <span id="pasajesVendidos">0</span></div>
+        <div class="dash-card">Recaudado <span id="dineroTotal">$0</span></div>
+      </div>
+    </div>
+
+    <div id="listaViajes"></div>
+  </div>
+
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -19,54 +250,180 @@
 <script src="firebase-config.js"></script>
 
 <script>
-db.collection("reservas").onSnapshot(snapshot => {
-  let totalReservas = 0;
-  let totalDinero = 0;
-  let pasajes = 0;
-  let completas = 0;
-  let detalle = "";
+const PASSWORD = "maule2026";
+const CAPACIDAD = 4;
 
-  snapshot.forEach(doc => {
-    const r = doc.data();
+let viajesData = [];
+let reservasData = [];
 
-    totalReservas++;
+function entrarAdmin() {
+  const clave = document.getElementById("clave").value;
 
-    if (r.tipo === "pasaje") {
-      pasajes++;
-      totalDinero += Number(r.precio || 0);
-    }
+  if (clave !== PASSWORD) {
+    alert("Clave incorrecta");
+    return;
+  }
 
-    if (r.tipo === "minivan_completa") {
-      completas++;
-    }
+  document.getElementById("login").style.display = "none";
+  document.getElementById("panelAdmin").style.display = "block";
 
-    detalle += `
+  cargarDatos();
+}
+
+function cargarDatos() {
+  db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
+    viajesData = [];
+
+    snapshot.forEach(doc => {
+      viajesData.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
+    renderAdmin();
+  });
+
+  db.collection("reservas").onSnapshot(snapshot => {
+    reservasData = [];
+
+    snapshot.forEach(doc => {
+      reservasData.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
+    renderAdmin();
+  });
+}
+
+function renderAdmin() {
+  const totalViajes = viajesData.length;
+  const viajesActivos = viajesData.filter(v => v.estado === "activo").length;
+
+  let pasajesVendidos = 0;
+  let dineroTotal = 0;
+
+  reservasData.forEach(r => {
+    pasajesVendidos += Number(r.cupos || 0);
+    dineroTotal += Number(r.precioTotal || 0);
+  });
+
+  document.getElementById("totalViajes").innerText = totalViajes;
+  document.getElementById("viajesActivos").innerText = viajesActivos;
+  document.getElementById("pasajesVendidos").innerText = pasajesVendidos;
+  document.getElementById("dineroTotal").innerText = "$" + dineroTotal.toLocaleString("es-CL");
+
+  const cont = document.getElementById("listaViajes");
+  cont.innerHTML = "";
+
+  if (viajesData.length === 0) {
+    cont.innerHTML = `
       <div class="card">
-        <strong>${r.nombre}</strong><br>
-        Teléfono: ${r.telefono}<br>
-        Tipo: ${r.tipo}<br>
-        Asiento: ${r.asiento || "Completa"}<br>
-        Precio: $${r.precio || 0}<br>
-        Pagado: ${r.pagado ? "Sí" : "No"}
+        <p class="vacio">No hay viajes creados todavía.</p>
+      </div>
+    `;
+    return;
+  }
+
+  viajesData.forEach(v => {
+    const reservasViaje = reservasData.filter(r => r.viajeId === v.id);
+
+    let cupos = 0;
+    let recaudado = 0;
+
+    reservasViaje.forEach(r => {
+      cupos += Number(r.cupos || 0);
+      recaudado += Number(r.precioTotal || 0);
+    });
+
+    cont.innerHTML += `
+      <div class="viaje-resumen" onclick="toggleViaje('${v.id}')">
+        <span class="indicador" id="indicador-${v.id}">+</span>
+        <h3>${v.origen} → ${v.destino}</h3>
+        <p>📅 ${v.fecha} | 🕒 ${v.hora}</p>
+        <p>👥 Vendidos: ${cupos}/${CAPACIDAD}</p>
+        <p>💰 Recaudado: $${recaudado.toLocaleString("es-CL")}</p>
+      </div>
+
+      <div class="viaje-detalle" id="detalle-${v.id}">
+        <div class="card">
+          <div class="mini-info">
+            <div class="dato">Estado: ${v.estado}</div>
+            <div class="dato">Precio: $${Number(v.precioAsiento || 0).toLocaleString("es-CL")}</div>
+            <div class="dato">Conductor: ${v.conductor || "Sin conductor"}</div>
+            <div class="dato">Vehículo: ${v.vehiculo || "Sin vehículo"}</div>
+          </div>
+
+          <div class="estado ${v.estado === "activo" ? "activo" : "cerrado"}">
+            ${v.estado === "activo" ? "Venta activa" : "Venta cerrada"}
+          </div>
+
+          ${
+            v.estado === "activo"
+            ? `<button class="btn-cerrar" onclick="cambiarEstado('${v.id}', 'cerrado')">Cerrar venta</button>`
+            : `<button class="btn-activar" onclick="cambiarEstado('${v.id}', 'activo')">Reactivar venta</button>`
+          }
+
+          <h3>Reservas</h3>
+          ${renderReservas(reservasViaje)}
+        </div>
+      </div>
+    `;
+  });
+}
+
+function renderReservas(reservas) {
+  if (reservas.length === 0) {
+    return `<p class="vacio">Este viaje aún no tiene reservas.</p>`;
+  }
+
+  let html = "";
+
+  reservas.forEach(r => {
+    html += `
+      <div class="reserva">
+        <p><strong>${r.nombre}</strong></p>
+        <p>👥 ${r.cupos || 0} pasajero(s) | 💰 $${Number(r.precioTotal || 0).toLocaleString("es-CL")}</p>
+        <button class="btn-eliminar" onclick="eliminarReserva('${r.id}')">Eliminar pasaje</button>
       </div>
     `;
   });
 
-  document.getElementById("resumen").innerHTML = `
-    <div class="card">
-      <h2>Resumen general</h2>
-      <p>Total reservas: ${totalReservas}</p>
-      <p>Pasajes vendidos: ${pasajes}</p>
-      <p>Minivans completas reservadas: ${completas}</p>
-      <p><strong>Total recaudado estimado: $${totalDinero}</strong></p>
-    </div>
-  `;
+  return html;
+}
 
-  document.getElementById("detalle").innerHTML = `
-    <h2>Detalle de reservas</h2>
-    ${detalle}
-  `;
-});
+function toggleViaje(id) {
+  const detalle = document.getElementById(`detalle-${id}`);
+  const indicador = document.getElementById(`indicador-${id}`);
+
+  if (!detalle) return;
+
+  detalle.classList.toggle("abierto");
+  indicador.innerText = detalle.classList.contains("abierto") ? "−" : "+";
+}
+
+function cambiarEstado(id, estado) {
+  db.collection("viajes").doc(id).update({
+    estado: estado
+  });
+}
+
+function eliminarReserva(id) {
+  const confirmar = confirm("¿Seguro que quieres eliminar este pasaje? Esta acción borrará la reserva de Firebase.");
+
+  if (!confirmar) return;
+
+  db.collection("reservas").doc(id).delete()
+    .then(() => {
+      alert("Reserva eliminada correctamente");
+    })
+    .catch(error => {
+      console.error(error);
+      alert("No se pudo eliminar la reserva");
+    });
+}
 </script>
 
 </body>
