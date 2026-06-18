@@ -2,26 +2,198 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crear Viajes</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #061a33;
+      color: #111827;
+    }
+
+    .hero {
+      padding: 36px 18px 78px;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #002b5b, #00509d, #ff9f1c);
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .contenedor {
+      max-width: 430px;
+      margin: -55px auto 35px;
+      padding: 0 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin: 18px 0;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+      border-top: 7px solid #ff9f1c;
+    }
+
+    h2 {
+      text-align: center;
+      color: #082f5f;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: #334155;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 7px 0 10px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0077ff, #004fbd);
+    }
+
+    button:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn-cerrar {
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    .btn-activar {
+      background: linear-gradient(135deg, #22c55e, #15803d);
+    }
+
+    .viaje-item {
+      border-top: 6px solid #00509d;
+    }
+
+    .ruta {
+      background: #eef6ff;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .ruta strong {
+      color: #082f5f;
+      font-size: 20px;
+    }
+
+    .info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .dato {
+      background: #f1f7ff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: #0f3057;
+      font-weight: bold;
+    }
+
+    .estado {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .activo {
+      background: #dcfce7;
+      color: #14532d;
+      border: 1px solid #22c55e;
+    }
+
+    .cerrado {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border: 1px solid #ef4444;
+    }
+
+    .vacio {
+      text-align: center;
+      color: #64748b;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="contenedor">
+<div class="hero">
   <h1>Gestión de Viajes</h1>
+  <p>Crea, revisa y cierra viajes disponibles para los clientes.</p>
+</div>
 
+<div class="contenedor">
   <div class="card">
     <h2>Crear nuevo viaje</h2>
 
-    <input id="origen" placeholder="Origen">
-    <input id="destino" placeholder="Destino">
-    <input id="fecha" type="date">
-    <input id="hora" type="time">
-    <input id="precio" type="number" placeholder="Precio por asiento">
-    <input id="conductor" placeholder="Nombre del conductor">
-    <input id="vehiculo" placeholder="Vehículo / patente">
+    <label>Origen</label>
+    <input id="origen" placeholder="Ej: Empedrado">
 
-    <button onclick="crearViaje()">Crear viaje</button>
+    <label>Destino</label>
+    <input id="destino" placeholder="Ej: Santiago">
+
+    <label>Fecha</label>
+    <input id="fecha" type="date">
+
+    <label>Hora</label>
+    <input id="hora" type="time">
+
+    <label>Precio por pasajero</label>
+    <input id="precio" type="number" placeholder="Ej: 10000">
+
+    <label>Nombre del conductor</label>
+    <input id="conductor" placeholder="Ej: Juan Pérez">
+
+    <label>Vehículo / patente</label>
+    <input id="vehiculo" placeholder="Ej: Auto blanco AB1234">
+
+    <button id="btnCrear" onclick="crearViaje()">Crear viaje</button>
   </div>
 
   <div id="listaViajes"></div>
@@ -33,52 +205,107 @@
 
 <script>
 function crearViaje() {
+  const btn = document.getElementById("btnCrear");
+
+  if (btn.disabled) return;
+
   const viaje = {
-    origen: document.getElementById("origen").value,
-    destino: document.getElementById("destino").value,
+    origen: document.getElementById("origen").value.trim(),
+    destino: document.getElementById("destino").value.trim(),
     fecha: document.getElementById("fecha").value,
     hora: document.getElementById("hora").value,
     precioAsiento: Number(document.getElementById("precio").value),
-    conductor: document.getElementById("conductor").value,
-    vehiculo: document.getElementById("vehiculo").value,
-    capacidad: 12,
+    conductor: document.getElementById("conductor").value.trim(),
+    vehiculo: document.getElementById("vehiculo").value.trim(),
+    capacidad: 4,
     estado: "activo",
     creado: new Date()
   };
 
   if (!viaje.origen || !viaje.destino || !viaje.fecha || !viaje.hora || !viaje.precioAsiento) {
-    alert("Completa los datos obligatorios");
+    alert("Completa origen, destino, fecha, hora y precio");
     return;
   }
 
+  btn.disabled = true;
+  btn.innerText = "Creando viaje...";
+
   db.collection("viajes").add(viaje).then(() => {
     alert("Viaje creado correctamente");
-    location.reload();
+
+    document.getElementById("origen").value = "";
+    document.getElementById("destino").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("hora").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("conductor").value = "";
+    document.getElementById("vehiculo").value = "";
+
+    btn.disabled = false;
+    btn.innerText = "Crear viaje";
+  }).catch(error => {
+    console.error(error);
+    alert("Ocurrió un error al crear el viaje");
+    btn.disabled = false;
+    btn.innerText = "Crear viaje";
   });
 }
 
 db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
   const cont = document.getElementById("listaViajes");
-  cont.innerHTML = "<h2>Viajes creados</h2>";
+  cont.innerHTML = "";
+
+  if (snapshot.empty) {
+    cont.innerHTML = `
+      <div class="card">
+        <p class="vacio">Todavía no hay viajes creados.</p>
+      </div>
+    `;
+    return;
+  }
+
+  cont.innerHTML = `<div class="card"><h2>Viajes creados</h2></div>`;
 
   snapshot.forEach(doc => {
     const v = doc.data();
+    const estadoClase = v.estado === "activo" ? "activo" : "cerrado";
+    const estadoTexto = v.estado === "activo" ? "Venta activa" : "Venta cerrada";
+
     cont.innerHTML += `
-      <div class="card">
-        <strong>${v.origen} → ${v.destino}</strong><br>
-        Fecha: ${v.fecha} | Hora: ${v.hora}<br>
-        Precio: $${v.precioAsiento}<br>
-        Conductor: ${v.conductor || "No asignado"}<br>
-        Vehículo: ${v.vehiculo || "No asignado"}<br><br>
-        <button onclick="cerrarViaje('${doc.id}')">Cerrar venta</button>
+      <div class="card viaje-item">
+        <div class="ruta">
+          <strong>${v.origen} → ${v.destino}</strong>
+        </div>
+
+        <div class="info">
+          <div class="dato">📅 ${v.fecha}</div>
+          <div class="dato">🕒 ${v.hora}</div>
+          <div class="dato">💰 $${v.precioAsiento}</div>
+          <div class="dato">🚗 4 pasajeros</div>
+        </div>
+
+        <div class="info">
+          <div class="dato">👤 ${v.conductor || "Sin conductor"}</div>
+          <div class="dato">🚘 ${v.vehiculo || "Sin vehículo"}</div>
+        </div>
+
+        <div class="estado ${estadoClase}">
+          ${estadoTexto}
+        </div>
+
+        ${
+          v.estado === "activo"
+          ? `<button class="btn-cerrar" onclick="cambiarEstado('${doc.id}', 'cerrado')">Cerrar venta</button>`
+          : `<button class="btn-activar" onclick="cambiarEstado('${doc.id}', 'activo')">Reactivar venta</button>`
+        }
       </div>
     `;
   });
 });
 
-function cerrarViaje(id) {
+function cambiarEstado(id, estado) {
   db.collection("viajes").doc(id).update({
-    estado: "cerrado"
+    estado: estado
   });
 }
 </script>
