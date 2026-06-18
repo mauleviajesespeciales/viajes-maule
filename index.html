@@ -2,14 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reservar Pasaje</title>
+  <title>Viajes Especiales Maule</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="cliente-body">
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Viajes Especiales Maule</h1>
+    <p>Reserva tu pasaje o asegura una minivan completa para tu próximo viaje.</p>
+    <span>Traslados cómodos, seguros y organizados</span>
+  </div>
+</div>
 
 <div class="contenedor">
-  <h1>Viajes Especiales Maule</h1>
-
+  <h2 class="titulo-seccion">Viajes disponibles</h2>
   <div id="viajes"></div>
 </div>
 
@@ -26,19 +33,45 @@ db.collection("viajes")
     const cont = document.getElementById("viajes");
     cont.innerHTML = "";
 
+    if (snapshot.empty) {
+      cont.innerHTML = `
+        <div class="card viaje-card">
+          <h3>No hay viajes disponibles por ahora</h3>
+          <p>Vuelve a revisar más tarde.</p>
+        </div>
+      `;
+      return;
+    }
+
     snapshot.forEach(doc => {
       const v = doc.data();
+
       cont.innerHTML += `
-        <div class="card">
-          <h2>${v.origen} → ${v.destino}</h2>
-          <p>Fecha: ${v.fecha} | Hora: ${v.hora}</p>
-          <p>Precio por asiento: $${v.precioAsiento}</p>
+        <div class="card viaje-card">
+          <div class="ruta">
+            <div>
+              <span>Origen</span>
+              <h2>${v.origen}</h2>
+            </div>
+            <div class="flecha">→</div>
+            <div>
+              <span>Destino</span>
+              <h2>${v.destino}</h2>
+            </div>
+          </div>
+
+          <div class="datos-viaje">
+            <p>📅 ${v.fecha}</p>
+            <p>🕒 ${v.hora}</p>
+            <p>💺 12 asientos</p>
+            <p>💰 $${v.precioAsiento}</p>
+          </div>
 
           <button onclick="mostrarAsientos('${doc.id}', ${v.precioAsiento})">
             Comprar pasaje
           </button>
 
-          <button onclick="reservarCompleto('${doc.id}')">
+          <button class="btn-secundario" onclick="reservarCompleto('${doc.id}')">
             Reservar minivan completa
           </button>
 
@@ -63,8 +96,13 @@ function mostrarAsientos(viajeId, precio) {
       });
 
       let html = `
-        <h3>Selecciona tu asiento</h3>
-        <div class="asientos">
+        <div class="zona-asientos">
+          <h3>Selecciona tu asiento</h3>
+          <p class="leyenda">Verde disponible · Rojo ocupado · Amarillo seleccionado</p>
+
+          <div class="conductor-box">Conductor</div>
+
+          <div class="asientos">
       `;
 
       for (let i = 1; i <= 12; i++) {
@@ -72,7 +110,7 @@ function mostrarAsientos(viajeId, precio) {
         html += `
           <div 
             class="asiento ${ocupado ? "ocupado" : "disponible"}"
-            onclick="${ocupado ? "" : `seleccionarAsiento('${viajeId}', ${i}, ${precio})`}"
+            onclick="${ocupado ? "" : `seleccionarAsiento('${viajeId}', ${i})`}"
             id="asiento-${viajeId}-${i}">
             ${i}
           </div>
@@ -80,21 +118,22 @@ function mostrarAsientos(viajeId, precio) {
       }
 
       html += `
+          </div>
+
+          <input id="nombre-${viajeId}" placeholder="Nombre pasajero">
+          <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
+
+          <button onclick="confirmarReserva('${viajeId}', ${precio})">
+            Confirmar reserva
+          </button>
         </div>
-
-        <input id="nombre-${viajeId}" placeholder="Nombre pasajero">
-        <input id="telefono-${viajeId}" placeholder="Teléfono WhatsApp">
-
-        <button onclick="confirmarReserva('${viajeId}', ${precio})">
-          Confirmar reserva
-        </button>
       `;
 
       document.getElementById(`asientos-${viajeId}`).innerHTML = html;
     });
 }
 
-function seleccionarAsiento(viajeId, asiento, precio) {
+function seleccionarAsiento(viajeId, asiento) {
   asientoSeleccionado = asiento;
 
   for (let i = 1; i <= 12; i++) {
