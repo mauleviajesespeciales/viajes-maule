@@ -170,10 +170,15 @@
     }
 
     .gps-nota {
-      color: #64748b;
-      font-size: 12px;
-      text-align: center;
-      margin: 10px 0 0;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #fef3c7;
+      border: 2px solid #f59e0b;
+      color: #92400e;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: left;
     }
 
     .pasajeros-titulo {
@@ -340,9 +345,22 @@ db.collection("viajes").orderBy("creado", "desc").onSnapshot(snapshot => {
               </button>
             </div>
 
-            <p class="gps-nota">
-              Mantén esta página abierta para compartir la ubicación en tiempo real.
-            </p>
+            <div class="gps-nota">
+              <strong>⚠️ Importante para el seguimiento GPS</strong><br><br>
+
+              Para que los pasajeros vean tu ubicación en tiempo real debes mantener esta página abierta durante todo el viaje.
+
+              <br><br>
+
+              Si:
+              <br>• cierras esta página
+              <br>• bloqueas el teléfono
+              <br>• cambias a otra aplicación
+
+              <br><br>
+
+              La ubicación podría dejar de actualizarse.
+            </div>
           </div>
 
           <div id="pasajeros-${viajeId}">
@@ -424,8 +442,6 @@ function escucharEstadoGPS(viajeId) {
       return;
     }
 
-    const data = doc.data();
-
     estado.className = "gps-estado gps-activo";
     estado.innerText = "🟢 Viaje en curso · GPS compartiendo ubicación";
 
@@ -436,6 +452,10 @@ function escucharEstadoGPS(viajeId) {
 
 function iniciarViaje(event, viajeId) {
   event.stopPropagation();
+
+  alert(
+    "Importante: Mantén esta página abierta durante todo el viaje para seguir compartiendo tu ubicación."
+  );
 
   if (!navigator.geolocation) {
     alert("Este celular o navegador no permite usar GPS.");
